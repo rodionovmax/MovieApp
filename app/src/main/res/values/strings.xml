@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="btn_text">Click Me</string>
+    <string name="reset_btn">reset</string>
+    <string name="text_output">Let\'s get the party started!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_data_class_text">Data Class</string>
+    <string name="btn_object_text">Object</string>
+    <string name="btn_loops_text">Loops</string>
 </resources>
