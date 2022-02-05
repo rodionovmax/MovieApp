@@ -10,7 +10,8 @@ object Repo {
     init {
         carsList = listOf(
             Car("Lamborghini", "Huracán", 2020),
-            Car("Aston Martin", "Valkyrie", 2021)
+            Car("Aston Martin", "Valkyrie", 2021),
+            Car("Lada", "Priora", 2010)
         )
     }
 

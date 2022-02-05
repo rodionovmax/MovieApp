@@ -19,23 +19,23 @@
             android:id="@+id/object_textview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/object_textview2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="TextView" />
+            tools:text="TextView"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/object_textview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             tools:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/object_back_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/object_textview1" />
+            app:layout_constraintTop_toBottomOf="@+id/object_textview1"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/object_back_btn"
