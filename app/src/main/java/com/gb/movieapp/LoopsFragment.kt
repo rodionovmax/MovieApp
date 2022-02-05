@@ -2,16 +2,15 @@ package com.gb.movieapp
 
 import android.content.Context
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
 
+class LoopsFragment : Fragment() {
 
-class CarFragment : Fragment() {
-
-    private var listener : IFragments ? = null
+    private lateinit var listener: IFragments
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +21,8 @@ class CarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_car, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_loops, container, false)
     }
 
     override fun onAttach(context: Context) {
@@ -34,14 +34,12 @@ class CarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnBack = view.findViewById<Button>(R.id.car_back_btn)
+        val btnBack = view.findViewById<Button>(R.id.loops_back_btn)
 
         btnBack.setOnClickListener {
-            listener?.openMainFragment()
+            listener.openMainFragment()
         }
     }
+
+
 }
-
-
-
-

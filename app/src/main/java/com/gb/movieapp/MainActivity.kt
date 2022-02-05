@@ -4,33 +4,61 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IFragments {
+
+    private val carFragment = CarFragment()
+    private val mainFragment = MainFragment()
+    private val fruitsFragment = FruitsFragment()
+    private val loopsFragment = LoopsFragment()
+    private val fm: FragmentManager = supportFragmentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnStart = findViewById<Button>(R.id.cta_button)
-        val txtView = findViewById<TextView>(R.id.text_view)
-        val btnReset = findViewById<Button>(R.id.reset_button)
-
-        btnStart.setOnClickListener {
-            txtView.text = "Let's get the party started!"
+        // Start Main Fragment when the app starts
+        if (savedInstanceState == null) {
+            fm
+                .beginTransaction()
+                .replace(R.id.fragment_holder, mainFragment)
+                .commit()
         }
 
-        btnReset.setOnClickListener {
-            txtView.text = ""
-        }
+    }
 
-        val carFragment = CarFragment()
-        val fm: FragmentManager = supportFragmentManager
+    private fun replaceFragment(fragment : Fragment) {
         fm
             .beginTransaction()
-            .add(R.id.fragment_holder, carFragment)
-            .addToBackStack(null)
+            .replace(R.id.fragment_holder, fragment)
+            .addToBackStack("")
             .commit()
     }
 
+    override fun openCarFragment() {
+        replaceFragment(carFragment)
+    }
 
+    override fun openMainFragment() {
+        replaceFragment(mainFragment)
+    }
+
+    override fun openFruitsFragment() {
+        replaceFragment(fruitsFragment)
+    }
+
+    override fun openLoopsFragment() {
+        replaceFragment(loopsFragment)
+    }
+
+
+}
+
+interface IFragments {
+    fun openCarFragment()
+    fun openMainFragment()
+    fun openFruitsFragment()
+    fun openLoopsFragment()
 }
