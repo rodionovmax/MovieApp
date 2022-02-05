@@ -2,8 +2,6 @@ package com.gb.movieapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
@@ -11,7 +9,7 @@ class MainActivity : AppCompatActivity(), IFragments {
 
     private val carFragment = CarFragment()
     private val mainFragment = MainFragment()
-    private val fruitsFragment = FruitsFragment()
+    private val fruitsFragment = ObjectFragment()
     private val loopsFragment = LoopsFragment()
     private val fm: FragmentManager = supportFragmentManager
 
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity(), IFragments {
         replaceFragment(mainFragment)
     }
 
-    override fun openFruitsFragment() {
+    override fun openObjectFragment() {
         replaceFragment(fruitsFragment)
     }
 
@@ -59,6 +57,6 @@ class MainActivity : AppCompatActivity(), IFragments {
 interface IFragments {
     fun openCarFragment()
     fun openMainFragment()
-    fun openFruitsFragment()
+    fun openObjectFragment()
     fun openLoopsFragment()
 }

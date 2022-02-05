@@ -9,32 +9,43 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    tools:context=".FruitsFragment">
+    tools:context=".ObjectFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textview_fruits"
+            android:id="@+id/object_textview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/fruits_back_btn"
+            app:layout_constraintBottom_toTopOf="@+id/object_textview2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="TextView" />
 
+        <TextView
+            android:id="@+id/object_textview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/object_back_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/object_textview1" />
+
         <Button
-            android:id="@+id/fruits_back_btn"
+            android:id="@+id/object_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_fruits" />
+            app:layout_constraintTop_toBottomOf="@+id/object_textview2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

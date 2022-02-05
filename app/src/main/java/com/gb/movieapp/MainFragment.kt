@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
         }
 
         btnFruits.setOnClickListener {
-            listener?.openFruitsFragment()
+            listener?.openObjectFragment()
         }
 
         btnLoops.setOnClickListener {
