@@ -25,23 +25,23 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         initDrawer(toolbar)
 
-//        binding.bottomNavigation.setOnNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.nav_home -> {
-//                    openFragment(HomeFragment.newInstance())
-//                    true
-//                }
-//                R.id.nav_favorites -> {
-//                    openFragment(FavoritesFragment.newInstance())
-//                    true
-//                }
-//                R.id.nav_ratings -> {
-//                    openFragment(RatingsFragment.newInstance())
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> {
+                    openFragment(HomeFragment.newInstance())
+                    true
+                }
+                R.id.nav_favorites -> {
+                    openFragment(FavoritesFragment.newInstance())
+                    true
+                }
+                R.id.nav_ratings -> {
+                    openFragment(RatingsFragment.newInstance())
+                    true
+                }
+                else -> false
+            }
+        }
 
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -114,6 +114,5 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack("")
             .commit()
     }
-
-
+    
 }
