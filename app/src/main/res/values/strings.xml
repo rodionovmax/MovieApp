@@ -15,4 +15,9 @@
     <string name="ratings_fragment_placeholder">Ratings fragment</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="imageview_movie">imageview_movie</string>
+    <string name="movie_title">Spider-man: No Way Home</string>
+    <string name="movie_year">2021</string>
+    <string name="movie_rating">8.4</string>
+    <string name="movie_card_star_icon">movie_card_star_icon</string>
 </resources>

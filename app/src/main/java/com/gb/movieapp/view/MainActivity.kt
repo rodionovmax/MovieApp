@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.ActivityMainBinding
+import com.gb.movieapp.view.home.HomeFragment
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -114,5 +115,5 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack("")
             .commit()
     }
-    
+
 }
