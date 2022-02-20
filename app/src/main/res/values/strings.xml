@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="drawer_title">My Movies Storage</string>
+    <string name="menu_item_home">Home</string>
+    <string name="menu_item_favorites">Favorites</string>
+    <string name="menu_item_ratings">Ratings</string>
+    <string name="nav_section_about">About</string>
+    <string name="menu_item_about">About</string>
+    <string name="nav_section_movies">Movies</string>
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_details">Details</string>
+    <string name="drawer_subtitle">Search for a movie…</string>
+    <string name="home_fragment_placeholder">Home fragment</string>
+    <string name="favorites_fragment_placeholder">Favorites fragment</string>
+    <string name="ratings_fragment_placeholder">Ratings fragment</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="imageview_movie">imageview_movie</string>
+    <string name="movie_title">Spider-man: No Way Home</string>
+    <string name="movie_year">2021</string>
+    <string name="movie_rating">8.4</string>
+    <string name="movie_card_star_icon">movie_card_star_icon</string>
 </resources>
