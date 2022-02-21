@@ -13,6 +13,7 @@
     <string name="home_fragment_placeholder">Home fragment</string>
     <string name="favorites_fragment_placeholder">Favorites fragment</string>
     <string name="ratings_fragment_placeholder">Ratings fragment</string>
+    <string name="settings_fragment_placeholder">Settings fragment</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="imageview_movie">imageview_movie</string>
@@ -20,4 +21,15 @@
     <string name="movie_year">2021</string>
     <string name="movie_rating">8.4</string>
     <string name="movie_card_star_icon">movie_card_star_icon</string>
+    <string name="toolbar_settings_title">Settings</string>
+    <string name="toolbar_search_title">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites_item_title">The King\'s Man</string>
+    <string name="favorites_item_release_date">12/22/2021</string>
+    <string name="favorites_item_genre">Action, Adventure, Thriller</string>
+    <string name="favorites_item_rating">7,1</string>
+    <string name="imageview_poster">imageviewPoster</string>
+    <string name="imageview_rating_favorites">imageviewRatingFavorites</string>
+    <string name="imageview_flag_favorite">imageviewFlagFavorite</string>
 </resources>

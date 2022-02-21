@@ -1,6 +1,8 @@
 package com.gb.movieapp.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.ActivityMainBinding
+import com.gb.movieapp.view.favorites.FavoritesFragment
 import com.gb.movieapp.view.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -120,6 +123,19 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.main_fragment_holder, fragment)
             .addToBackStack("")
             .commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings -> openFragment(SettingsFragment.newInstance())
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }
