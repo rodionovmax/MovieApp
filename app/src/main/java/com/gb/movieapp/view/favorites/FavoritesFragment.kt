@@ -1,5 +1,6 @@
 package com.gb.movieapp.view.favorites
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
 
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment()  {
+
+//    private lateinit var listener : FavoritesAdapter.OnFavoritesCardClickListener
 
     companion object {
         fun newInstance() = FavoritesFragment()

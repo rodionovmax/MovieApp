@@ -32,4 +32,19 @@
     <string name="imageview_poster">imageviewPoster</string>
     <string name="imageview_rating_favorites">imageviewRatingFavorites</string>
     <string name="imageview_flag_favorite">imageviewFlagFavorite</string>
+    <string name="imageviewPoster">imageview_poster</string>
+    <string name="movie_genres_details">Action, Adventure, Science Fiction and many-many more</string>
+    <string name="starIcon">star_icon</string>
+    <string name="budget_placeholder_details">Budget:</string>
+    <string name="revenue_placeholder_details">Revenue:</string>
+    <string name="release_date_placeholder_details">Release date:</string>
+    <string name="budget_value_details">$200,000,000.00</string>
+    <string name="revenue_value_details">$1,809,940,686.00</string>
+    <string name="release_date_value_details">12/17/2021</string>
+    <string name="original_movie_name_details">Original movie name</string>
+    <string name="duration_details">2h 28m</string>
+    <string name="rating_details">8.3 (8128)</string>
+    <string name="movie_overview_details">Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.</string>
+    <string name="localized_movie_name_details">Movie name localized</string>
+    <string name="favorites_movie_flag">Favorites movie flag</string>
 </resources>

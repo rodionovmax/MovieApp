@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
+import com.gb.movieapp.viewmodel.HomeViewModel
 
 
 class HomeFragment : Fragment() {
@@ -26,11 +27,10 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         adapter = HomeContentAdapter()
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }

@@ -4,13 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
+import com.gb.movieapp.view.MainActivity
+import com.gb.movieapp.view.details.DetailsFragment
 
 class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.HomeMovieViewHolder>() {
 
     // Creating items for movies adapter - temporary storing them here
-    private val moviesList : ArrayList<String> = arrayListOf(
+    private val moviesList: ArrayList<String> = arrayListOf(
         "First Movie",
         "Second Movie",
         "Third Movie",
@@ -39,14 +43,26 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.HomeMovieViewHold
         return moviesList.size
     }
 
-    class HomeMovieViewHolder(
-            itemView: View,
-            val tvMovieName: TextView = itemView.findViewById(R.id.movie_card_title),
-            val tvMovieYear: TextView = itemView.findViewById(R.id.movie_card_year),
-            val tvMovieRating: TextView = itemView.findViewById(R.id.movie_card_rating)
-        ) : RecyclerView.ViewHolder(itemView)
+    inner class HomeMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val movieCard: CardView = itemView.findViewById(R.id.movie_card)
+        val tvMovieName: TextView = itemView.findViewById(R.id.movie_card_title)
+        val tvMovieYear: TextView = itemView.findViewById(R.id.movie_card_year)
+        val tvMovieRating: TextView = itemView.findViewById(R.id.movie_card_rating)
 
-    init {
-        // in this holder I initialized elements in primary constructor
+        init {
+            movieCard.setOnClickListener {
+                val activity = itemView.context as AppCompatActivity
+                activity
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_fragment_holder, DetailsFragment.newInstance())
+                    .addToBackStack("")
+                    .commit()
+            }
+        }
+
     }
+
+
+
 }
