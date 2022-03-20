@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.ActivityMainBinding
+import com.gb.movieapp.model.Favorites
 import com.gb.movieapp.view.details.DetailsFragment
 import com.gb.movieapp.view.favorites.FavoritesAdapter
 import com.gb.movieapp.view.favorites.FavoritesFragment
@@ -19,7 +20,9 @@ import com.gb.movieapp.view.home.HomeMovieAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), FavoritesAdapter.OnFavoritesCardClickListener {
+class MainActivity : AppCompatActivity()
+, MovieCard
+/*, FavoritesAdapter.OnFavoritesCardClickListener*/ {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity(), FavoritesAdapter.OnFavoritesCardClickL
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
         // TODO: Find how to bind toolbar from app_bar_main.xml
-        // val toolbar: androidx.appcompat.widget.Toolbar = binding.toolbar
+//         val toolbar: androidx.appcompat.widget.Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         initDrawer(toolbar)
 
@@ -146,8 +149,18 @@ class MainActivity : AppCompatActivity(), FavoritesAdapter.OnFavoritesCardClickL
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onFavoritesCardClicked(position: Int) {
-        openFragment(DetailsFragment.newInstance())
+    override fun onMovieCardClicked(favorites: Favorites) {
+        val manager = supportFragmentManager
+        val bundle = Bundle()
+        bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, favorites)
+        manager.beginTransaction()
+            .add(R.id.main_fragment_holder, DetailsFragment.newInstance(bundle))
+            .addToBackStack("")
+            .commitAllowingStateLoss()
     }
+
+//    override fun onFavoritesCardClicked(position: Int) {
+//        openFragment(DetailsFragment.newInstance())
+//    }
 
 }
