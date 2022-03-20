@@ -4,12 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
 import com.gb.movieapp.model.Favorites
-import com.gb.movieapp.model.MovieDetails
-import com.gb.movieapp.view.MovieCard
 
 class FavoritesAdapter(
     private var onMovieCardClickListener: FavoritesFragment.OnItemViewClickListener?

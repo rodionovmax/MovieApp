@@ -13,6 +13,13 @@ data class Movies(
 ) : Parcelable
 
 
+@Parcelize
+data class Sections(
+    val id: Int,
+    val name: String,
+) : Parcelable
+
+
 fun getMovies(): List<Movies> {
     return listOf(
         Movies(634649, "@drawable/mpd", "Spider-Man: No Way Home",2021,8.3),
@@ -40,5 +47,15 @@ fun getFavorites(): List<Favorites> {
         Favorites(476669, "@drawable/kingsman", "The King's Man","2021-12-22",listOf("Action", "Adventure", "Thriller", "War"), 7.0),
         Favorites(512195, "@drawable/red_notice", "Red Notice","2021-11-04",listOf("Action", "Comedy", "Crime", "Thriller"), 6.8),
         Favorites(800510, "@drawable/kimi", "Kimi","2022-02-10",listOf("Thriller"), 6.3),
+    )
+}
+
+
+fun getSections(): List<Sections> {
+    return listOf(
+        Sections(1, "Popular"),
+        Sections(2, "Now Playing"),
+        Sections(3, "Upcoming"),
+        Sections(4, "Top Rated"),
     )
 }

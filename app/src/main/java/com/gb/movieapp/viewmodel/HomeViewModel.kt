@@ -20,14 +20,15 @@ class HomeViewModel(
 
     fun getLiveData() = liveDataToObserve
 
-    fun getMoviesFromLocal() = getMovies()
+//    fun getMoviesFromLocal() = getMovies()
+    fun getMoviesFromLocal() = getDataFromLocalSource()
 
     private fun getDataFromLocalSource() {
         liveDataToObserve.value = AppState.Loading
-//        Thread {
-//            Thread.sleep(1000)
-//            liveDataToObserve.postValue(AppState.Success(if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus() else repositoryImpl.getWeatherFromLocalStorageWorld()))
-//        }.start()
+        Thread {
+            Thread.sleep(1000)
+            liveDataToObserve.postValue(AppState.Success(repositoryImpl.getFavoritesFromLocalStorage()))
+        }.start()
     }
 }
 

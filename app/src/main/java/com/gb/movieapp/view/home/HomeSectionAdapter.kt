@@ -5,24 +5,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
-import com.gb.movieapp.model.Favorites
-import com.gb.movieapp.model.getFavorites
-import com.gb.movieapp.model.getMovies
+import com.gb.movieapp.model.*
 import com.gb.movieapp.view.MovieCard
 import com.gb.movieapp.view.favorites.FavoritesFragment
 import com.gb.movieapp.viewmodel.HomeViewModel
 import com.gb.movieapp.viewmodel.HomeViewModelFactory
+import kotlinx.android.synthetic.main.section_home.view.*
 
 class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionViewHolder>() {
 
+    private var sections : List<Sections> = getSections()
+    private var moviesDataList : List<Favorites> = getFavorites()
 
-    // Creating items for sections adapter - temporary storing them here
-    var sections: ArrayList<String> = arrayListOf(
-        "Popular", "Now Playing", "Upcoming", "Top Rated"
-    )
+    fun setMoviesList(data : List<Favorites>) {
+        moviesDataList = data
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeSectionViewHolder {
         val view: View =
@@ -31,38 +33,56 @@ class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionVi
     }
 
     override fun onBindViewHolder(holder: HomeSectionViewHolder, position: Int) {
-        val item = sections[position]
-        holder.sectionTitle.text = item
+//        val item = sections[position].name
+//        holder.sectionTitle.text = item
+        holder.bind(sections[position])
     }
 
     override fun getItemCount(): Int {
         return sections.size
     }
 
-    class HomeSectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//    var onItemClick: ((Favorites) -> Unit)? = null
+
+    inner class HomeSectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+//        init {
+//            itemView.setOnClickListener {
+//                onItemClick?.invoke(moviesDataList[adapterPosition])
+//
+//            }
+//        }
 
         var listener = itemView.context as MovieCard
 
         var sectionTitle: TextView = itemView.findViewById(R.id.section_title)
-//        private var adapter: HomeMovieAdapter = HomeMovieAdapter()
         private val adapter = HomeMovieAdapter(object : FavoritesFragment.OnItemViewClickListener {
             override fun onItemViewClick(favorites: Favorites) {
                 listener.onMovieCardClicked(favorites)
             }
         })
 
-        init {
-            val homeMoviesRecycleView = itemView.findViewById<RecyclerView>(R.id.home_movie_list)
-            homeMoviesRecycleView.adapter = adapter
-            homeMoviesRecycleView.layoutManager =
-                LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-
-//            homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-//            val movies = homeViewModel.getMoviesFromLocal()
-//            adapter.setMoviesList(movies)
-
-            adapter.setMoviesList(getFavorites())
+        fun bind(sections: Sections) {
+            itemView.section_title.text = sections.name
+//            val homeMovieAdapter = HomeMovieAdapter(result.members)
+            itemView.home_movie_list.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+            itemView.home_movie_list.adapter = adapter
+//            adapter.setMoviesList(getFavorites())  // Movies don't display without this line
         }
+
+//        init {
+//            val homeMoviesRecycleView = itemView.findViewById<RecyclerView>(R.id.home_movie_list)
+//            homeMoviesRecycleView.adapter = adapter
+//            homeMoviesRecycleView.layoutManager =
+//                LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+//
+////            homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+////            val movies = homeViewModel.getMoviesFromLocal()
+////            adapter.setMoviesList(movies)
+//
+////            adapter.setMoviesList(getFavorites())
+//        }
+
 
 
 

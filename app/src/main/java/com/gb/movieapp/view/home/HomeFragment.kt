@@ -20,6 +20,7 @@ import com.gb.movieapp.model.Movies
 import com.gb.movieapp.view.MovieCard
 import com.gb.movieapp.view.favorites.FavoritesAdapter
 import com.gb.movieapp.view.favorites.FavoritesFragment
+import com.gb.movieapp.viewmodel.AppState
 import com.gb.movieapp.viewmodel.HomeViewModel
 
 
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: HomeSectionAdapter
+//    private lateinit var moviesAdapter: HomeMovieAdapter
 //    private lateinit var listener : MovieCard
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -82,37 +84,39 @@ class HomeFragment : Fragment() {
 //        homeContentRecyclerView.layoutManager =
 //            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-//        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-//        homeViewModel.getMoviesFromLocal()
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel.getLiveData().observe(viewLifecycleOwner, {renderData(it)})
+        homeViewModel.getMoviesFromLocal()
 //
 //        adapter.set(favorites)
     }
 
-    fun getMoviesList(): List<Movies> {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        return homeViewModel.getMoviesFromLocal()
-    }
+//    fun getMoviesList(): List<Movies> {
+//        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+//        return homeViewModel.getMoviesFromLocal()
+//    }
 
 
 
-//    private fun renderData(appState: AppState) {
-//        when (appState) {
-//            is AppState.Success -> {
-//                binding.mainFragmentLoadingLayout.visibility = View.GONE
-//                adapter.setWeather(appState.weatherData)
-//            }
-//            is AppState.Loading -> {
-//                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
-//            }
-//            is AppState.Error -> {
-//                binding.mainFragmentLoadingLayout.visibility = View.GONE
+    private fun renderData(appState: AppState) {
+        when(appState) {
+            is AppState.Success -> {
+//                binding.favoritesFragmentLoadingLayout.visibility = View.GONE
+//                adapter.setFavoritesList(appState.favoriteMovies)
+                adapter.setMoviesList(appState.favoriteMovies)
+            }
+            is AppState.Loading -> {
+//                binding.favoritesFragmentLoadingLayout.visibility = View.VISIBLE
+            }
+            is AppState.Error -> {
+//                binding.favoritesFragmentLoadingLayout.visibility = View.GONE
 //                Snackbar
 //                    .make(binding.mainFragmentFAB, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction(getString(R.string.reload)) { viewModel.getWeatherFromLocalSourceRus() }
+//                    .setAction(getString(R.string.reload)) { favoritesViewModel.getFavorites() }
 //                    .show()
-//            }
-//        }
-//    }
+            }
+        }
+    }
 
 
 }
