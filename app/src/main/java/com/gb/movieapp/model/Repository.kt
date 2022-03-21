@@ -2,6 +2,7 @@ package com.gb.movieapp.model
 
 interface Repository {
     fun getMovieDetailsFromServer(): Movie
-    fun getMoviesFromLocaleStorage(): List<Movies>
-    fun getFavoritesFromLocalStorage(): List<Favorites>
+    fun getMovieListFromLocaleStorage(): List<Movie>
+    fun getFavoritesListFromLocaleStorage(): List<Movie>
+    fun addMovieToFavorites(): Movie
 }

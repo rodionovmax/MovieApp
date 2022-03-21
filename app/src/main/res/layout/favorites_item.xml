@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageview_poster"
+            android:id="@+id/iv_poster"
             android:layout_width="67dp"
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,58 +28,58 @@
             android:contentDescription="@string/imageview_poster" />
 
         <TextView
-            android:id="@+id/textview_name_favorites"
+            android:id="@+id/title_favorites"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:text="@string/favorites_item_title"
+            tools:text="@string/favorites_item_title"
             android:textAlignment="textStart"
             android:textSize="16sp"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageview_poster"
+            app:layout_constraintStart_toEndOf="@id/iv_poster"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textview_release_date_favorites"
+            android:id="@+id/release_date_favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@string/favorites_item_release_date"
-            app:layout_constraintStart_toEndOf="@id/imageview_poster"
-            app:layout_constraintTop_toBottomOf="@id/textview_name_favorites" />
+            tools:text="@string/favorites_item_release_date"
+            app:layout_constraintStart_toEndOf="@id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@id/title_favorites" />
 
         <TextView
-            android:id="@+id/textview_genre_favorites"
+            android:id="@+id/genre_favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@string/favorites_item_genre"
+            tools:text="@string/favorites_item_genre"
             android:textStyle="italic"
-            app:layout_constraintStart_toEndOf="@id/imageview_poster"
-            app:layout_constraintTop_toBottomOf="@id/textview_release_date_favorites" />
+            app:layout_constraintStart_toEndOf="@id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@id/release_date_favorites" />
 
         <ImageView
-            android:id="@+id/imageview_rating_favorites"
+            android:id="@+id/star_icon_favorites"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textview_rating_favorites"
-            app:layout_constraintStart_toEndOf="@id/imageview_poster"
-            app:layout_constraintTop_toTopOf="@+id/textview_rating_favorites"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_favorites"
+            app:layout_constraintStart_toEndOf="@id/iv_poster"
+            app:layout_constraintTop_toTopOf="@+id/rating_favorites"
             app:srcCompat="@android:drawable/btn_star_big_on"
             android:contentDescription="@string/imageview_rating_favorites" />
 
         <TextView
-            android:id="@+id/textview_rating_favorites"
+            android:id="@+id/rating_favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/favorites_item_rating"
-            app:layout_constraintStart_toEndOf="@id/imageview_rating_favorites"
-            app:layout_constraintTop_toBottomOf="@+id/textview_genre_favorites" />
+            tools:text="@string/favorites_item_rating"
+            app:layout_constraintStart_toEndOf="@id/star_icon_favorites"
+            app:layout_constraintTop_toBottomOf="@+id/genre_favorites" />
 
         <ImageView
-            android:id="@+id/imageview_flag_favorite"
+            android:id="@+id/favorites_flag"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="16dp"

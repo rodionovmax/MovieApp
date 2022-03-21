@@ -1,7 +1,7 @@
 package com.gb.movieapp.view
 
-import com.gb.movieapp.model.Favorites
+import com.gb.movieapp.model.Movie
 
 interface MovieCard {
-    fun onMovieCardClicked(favorites: Favorites)
+    fun onMovieCardClicked(movie: Movie)
 }

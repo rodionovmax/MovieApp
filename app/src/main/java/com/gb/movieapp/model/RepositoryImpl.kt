@@ -5,11 +5,15 @@ class RepositoryImpl : Repository {
         TODO("Not yet implemented")
     }
 
-    override fun getMoviesFromLocaleStorage(): List<Movies> {
-        return getMovies()
+    override fun getMovieListFromLocaleStorage(): List<Movie> {
+        return getMoviesList()
     }
 
-    override fun getFavoritesFromLocalStorage() : List<Favorites> {
-        return getFavoriteMovies()
+    override fun getFavoritesListFromLocaleStorage(): List<Movie> {
+        return getFavoritesList()
+    }
+
+    override fun addMovieToFavorites(): Movie {
+        TODO("Not yet implemented")
     }
 }

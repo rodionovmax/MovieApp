@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageview_movie"
+            android:id="@+id/iv_movie_poster"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:baselineAlignBottom="false"
@@ -42,7 +42,7 @@
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageview_movie" />
+            app:layout_constraintTop_toBottomOf="@id/iv_movie_poster" />
 
         <TextView
             android:id="@+id/movie_card_year"
@@ -75,7 +75,7 @@
             android:contentDescription="@string/movie_card_star_icon" />
 
         <ImageView
-            android:id="@+id/iv_flag_favorites_movie"
+            android:id="@+id/iv_flag_favorite_movie"
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:layout_constraintEnd_toEndOf="parent"
