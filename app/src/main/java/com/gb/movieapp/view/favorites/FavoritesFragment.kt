@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentFavoritesBinding
 import com.gb.movieapp.model.Movie
-import com.gb.movieapp.view.MovieCard
+import com.gb.movieapp.view.MovieCardListener
+import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.viewmodel.AppState
 import com.gb.movieapp.viewmodel.FavoritesViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +20,8 @@ import com.google.android.material.snackbar.Snackbar
 
 class FavoritesFragment : Fragment() {
 
-    private lateinit var listener: MovieCard
+    private lateinit var listener: MovieCardListener
+    private lateinit var favoritesListener: OnFavoritesCheckboxListener
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
@@ -29,8 +31,13 @@ class FavoritesFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MovieCard) {
+        if (context is MovieCardListener) {
             listener = context
+        } else {
+            throw RuntimeException(requireContext().toString())
+        }
+        if (context is OnFavoritesCheckboxListener) {
+            favoritesListener = context
         } else {
             throw RuntimeException(requireContext().toString())
         }
@@ -42,7 +49,12 @@ class FavoritesFragment : Fragment() {
         override fun onItemViewClick(favorites: Movie) {
             listener.onMovieCardClicked(favorites)
         }
-    })
+    },
+        object : OnFavoritesCheckboxListener {
+            override fun onItemChecked(p0: View, movie: Movie) {
+                favoritesListener.onItemChecked(p0, movie)
+            }
+        })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +65,7 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        return binding.getRoot()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

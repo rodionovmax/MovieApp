@@ -59,7 +59,7 @@ fun getMoviesList() : List<Movie> {
 
 
 fun getFavoritesList() : List<Movie> {
-    return listOf(
+    return mutableListOf(
         Movie(634649, "Spider-Man: No Way Home","Spider-Man: No Way Home","@drawable/mpd", listOf("Action", "Adventure", "Science Fiction"), 148, 8.3, 200000000, 1866488233, "2021-12-15", 2021, "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man."),
         Movie(414906, "The Batman","The Batman","@drawable/batman", listOf("Crime", "Mystery", "Thriller"), 176, 8.0, 185000000, 600000000, "2022-03-04", 2022, "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler."),
         Movie(476669, "The King's Man","The King's Man","@drawable/kingsman", listOf("Action", "Adventure", "Thriller", "War"), 131, 7.0, 100000000, 124005195, "2021-12-22", 2021, "As a collection of history's worst tyrants and criminal masterminds gather to plot a war to wipe out millions, one man must race against time to stop them."),

@@ -1,5 +1,6 @@
 package com.gb.movieapp.view.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentHomeBinding
+import com.gb.movieapp.view.MovieCardListener
+import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.viewmodel.AppState
 import com.gb.movieapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar

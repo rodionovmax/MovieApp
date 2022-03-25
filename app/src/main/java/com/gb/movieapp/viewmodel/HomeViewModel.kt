@@ -2,6 +2,7 @@ package com.gb.movieapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.Repository
 import com.gb.movieapp.model.RepositoryImpl
 
@@ -21,5 +22,8 @@ class HomeViewModel(
             liveDataToObserve.postValue(AppState.Success(repoImpl.getMovieListFromLocaleStorage()))
         }.start()
     }
+
+    fun addToFavorites(movie: Movie) = repoImpl.addMovieToFavorites(movie)
+
 }
 

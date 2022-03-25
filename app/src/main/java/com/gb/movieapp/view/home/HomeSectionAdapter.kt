@@ -3,12 +3,12 @@ package com.gb.movieapp.view.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
 import com.gb.movieapp.model.*
-import com.gb.movieapp.view.MovieCard
+import com.gb.movieapp.view.MovieCardListener
+import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.favorites.FavoritesFragment
 import kotlinx.android.synthetic.main.section_home.view.*
 
@@ -38,13 +38,21 @@ class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionVi
 
     inner class HomeSectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var listener = itemView.context as MovieCard
+        var listener = itemView.context as MovieCardListener
+        var favoritesListener = itemView.context as OnFavoritesCheckboxListener
 
-        private val adapter = HomeMovieAdapter(object : FavoritesFragment.OnItemViewClickListener {
-            override fun onItemViewClick(favorites: Movie) {
-                listener.onMovieCardClicked(favorites)
+        private val adapter = HomeMovieAdapter(
+            object : FavoritesFragment.OnItemViewClickListener {
+                override fun onItemViewClick(favorites: Movie) {
+                    listener.onMovieCardClicked(favorites)
+                }
+            },
+            object : OnFavoritesCheckboxListener {
+                override fun onItemChecked(p0: View, movie: Movie) {
+                    favoritesListener.onItemChecked(p0, movie)
+                }
             }
-        })
+        )
 
         fun bind(sections: Sections) {
             itemView.section_title.text = sections.name

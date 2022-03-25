@@ -74,10 +74,12 @@
             app:srcCompat="@android:drawable/btn_star_big_on"
             android:contentDescription="@string/movie_card_star_icon" />
 
-        <ImageView
-            android:id="@+id/iv_flag_favorite_movie"
+        <CheckBox
+            android:id="@+id/checkbox_favorite_movie"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:button="@drawable/selector_favorites_item"
+            app:useMaterialThemeColors="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_favorite_border"

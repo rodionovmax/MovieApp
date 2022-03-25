@@ -1,6 +1,7 @@
 package com.gb.movieapp.model
 
 class RepositoryImpl : Repository {
+
     override fun getMovieDetailsFromServer(): Movie {
         TODO("Not yet implemented")
     }
@@ -13,7 +14,10 @@ class RepositoryImpl : Repository {
         return getFavoritesList()
     }
 
-    override fun addMovieToFavorites(): Movie {
-        TODO("Not yet implemented")
+    private val favorites: ArrayList<Movie> = getFavoritesListFromLocaleStorage() as ArrayList<Movie>
+
+    override fun addMovieToFavorites(movie: Movie) {
+        favorites.add(movie)
     }
+
 }

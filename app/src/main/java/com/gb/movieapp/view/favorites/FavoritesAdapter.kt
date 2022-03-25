@@ -3,13 +3,16 @@ package com.gb.movieapp.view.favorites
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
 import com.gb.movieapp.model.Movie
+import com.gb.movieapp.view.OnFavoritesCheckboxListener
 
 class FavoritesAdapter(
-    private var onMovieCardClickListener: FavoritesFragment.OnItemViewClickListener?
+    private var onMovieCardClickListener: FavoritesFragment.OnItemViewClickListener?,
+    private var onFavoritesCheckboxListener: OnFavoritesCheckboxListener?,
 ) : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
     private var favoritesList: List<Movie> = listOf()
@@ -45,6 +48,11 @@ class FavoritesAdapter(
                 favorites.rating.toString()
             itemView.setOnClickListener {
                 onMovieCardClickListener?.onItemViewClick(favorites)
+            }
+
+            val favoritesCheckBox = itemView.findViewById<CheckBox>(R.id.favorites_checkbox)
+            favoritesCheckBox.setOnClickListener {
+                onFavoritesCheckboxListener?.onItemChecked(favoritesCheckBox, favorites)
             }
         }
 
