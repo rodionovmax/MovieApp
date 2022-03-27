@@ -39,20 +39,23 @@ class FavoritesAdapter(
 
     inner class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(favorites: Movie) {
-            itemView.findViewById<TextView>(R.id.title_favorites).text = favorites.originalTitle
-            itemView.findViewById<TextView>(R.id.release_date_favorites).text =
-                favorites.releaseDate
-            itemView.findViewById<TextView>(R.id.genre_favorites).text =
-                favorites.genres.joinToString()
-            itemView.findViewById<TextView>(R.id.rating_favorites).text =
-                favorites.rating.toString()
-            itemView.setOnClickListener {
-                onMovieCardClickListener?.onItemViewClick(favorites)
-            }
+            itemView.apply {
+                findViewById<TextView>(R.id.title_favorites).text = favorites.originalTitle
+                findViewById<TextView>(R.id.release_date_favorites).text = favorites.releaseDate
+                findViewById<TextView>(R.id.genre_favorites).text = favorites.genres.joinToString()
+                findViewById<TextView>(R.id.rating_favorites).text = favorites.rating.toString()
 
-            val favoritesCheckBox = itemView.findViewById<CheckBox>(R.id.favorites_checkbox)
-            favoritesCheckBox.setOnClickListener {
-                onFavoritesCheckboxListener?.onItemChecked(favoritesCheckBox, favorites)
+                // Handling click on a favorites card
+                setOnClickListener {
+                    onMovieCardClickListener?.onItemViewClick(favorites)
+                }
+
+                // Handling click on a favorites checkbox
+                findViewById<CheckBox>(R.id.favorites_checkbox).run {
+                    setOnClickListener {
+                        onFavoritesCheckboxListener?.onItemChecked(this, favorites)
+                    }
+                }
             }
         }
 

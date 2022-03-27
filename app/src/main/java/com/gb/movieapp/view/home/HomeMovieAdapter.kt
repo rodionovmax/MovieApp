@@ -14,7 +14,7 @@ import com.gb.movieapp.view.favorites.FavoritesFragment
 
 class HomeMovieAdapter(
     private var onMovieCardClickListener: FavoritesFragment.OnItemViewClickListener?,
-    private var onFavoritesCheckboxListener: OnFavoritesCheckboxListener,
+    private var onFavoritesCheckboxListener: OnFavoritesCheckboxListener?,
 ) : RecyclerView.Adapter<HomeMovieAdapter.HomeMovieViewHolder>() {
 
     private var moviesDataList: List<Movie> = getMoviesList()
@@ -37,17 +37,22 @@ class HomeMovieAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: Movie) {
-            itemView.findViewById<TextView>(R.id.movie_card_title).text = movie.originalTitle
-            itemView.findViewById<TextView>(R.id.movie_card_year).text =
-                movie.releaseYear.toString()
-            itemView.findViewById<TextView>(R.id.movie_card_rating).text = movie.rating.toString()
-            itemView.setOnClickListener {
-                onMovieCardClickListener?.onItemViewClick(movie)
-            }
+            itemView.apply {
+                findViewById<TextView>(R.id.movie_card_title).text = movie.originalTitle
+                findViewById<TextView>(R.id.movie_card_year).text = movie.releaseYear.toString()
+                findViewById<TextView>(R.id.movie_card_rating).text = movie.rating.toString()
 
-            val favoritesCheckBox = itemView.findViewById<CheckBox>(R.id.checkbox_favorite_movie)
-            favoritesCheckBox.setOnClickListener {
-                onFavoritesCheckboxListener.onItemChecked(favoritesCheckBox, movie)
+                // Handling click on a movie card
+                setOnClickListener {
+                    onMovieCardClickListener?.onItemViewClick(movie)
+                }
+
+                // Handling click on a favorites checkbox
+                findViewById<CheckBox>(R.id.checkbox_favorite_movie).run {
+                    setOnClickListener {
+                        onFavoritesCheckboxListener?.onItemChecked(this, movie)
+                    }
+                }
             }
         }
     }

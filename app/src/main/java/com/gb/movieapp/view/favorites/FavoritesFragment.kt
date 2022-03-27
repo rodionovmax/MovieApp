@@ -25,6 +25,12 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
+    private val favoritesViewModel: FavoritesViewModel by lazy {
+        ViewModelProvider(this).get(
+            FavoritesViewModel::class.java
+        )
+    }
+
     companion object {
         fun newInstance() = FavoritesFragment()
     }
@@ -42,8 +48,6 @@ class FavoritesFragment : Fragment() {
             throw RuntimeException(requireContext().toString())
         }
     }
-
-    private lateinit var favoritesViewModel: FavoritesViewModel
 
     private val adapter = FavoritesAdapter(object : OnItemViewClickListener {
         override fun onItemViewClick(favorites: Movie) {
@@ -75,7 +79,6 @@ class FavoritesFragment : Fragment() {
         binding.favoritesRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        favoritesViewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
         favoritesViewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
         favoritesViewModel.getFavorites()
     }

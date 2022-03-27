@@ -6,15 +6,12 @@ class RepositoryImpl : Repository {
         TODO("Not yet implemented")
     }
 
-    override fun getMovieListFromLocaleStorage(): List<Movie> {
-        return getMoviesList()
-    }
+    override fun getMovieListFromLocaleStorage() = getMoviesList()
 
-    override fun getFavoritesListFromLocaleStorage(): List<Movie> {
-        return getFavoritesList()
-    }
+    override fun getFavoritesListFromLocaleStorage() = getFavoritesList()
 
-    private val favorites: ArrayList<Movie> = getFavoritesListFromLocaleStorage() as ArrayList<Movie>
+    private val favorites: ArrayList<Movie> =
+        getFavoritesListFromLocaleStorage() as ArrayList<Movie>
 
     override fun addMovieToFavorites(movie: Movie) {
         favorites.add(movie)

@@ -55,10 +55,12 @@ class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionVi
         )
 
         fun bind(sections: Sections) {
-            itemView.section_title.text = sections.name
-            itemView.home_movie_list.layoutManager =
-                LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            itemView.home_movie_list.adapter = adapter
+            itemView.apply {
+                section_title.text = sections.name
+                home_movie_list.layoutManager =
+                    LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+                home_movie_list.adapter = adapter
+            }
         }
     }
 

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.home.HomeFragment"
+    android:id="@+id/home_fragment_root_view"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
     <androidx.recyclerview.widget.RecyclerView

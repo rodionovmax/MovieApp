@@ -143,11 +143,10 @@ class MainActivity : AppCompatActivity(), MovieCardListener, OnFavoritesCheckbox
     }
 
     override fun onMovieCardClicked(movie: Movie) {
-        val manager = supportFragmentManager
-        val bundle = Bundle()
-        bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
-        manager.beginTransaction()
-            .add(R.id.main_fragment_holder, DetailsFragment.newInstance(bundle))
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_fragment_holder, DetailsFragment.newInstance(Bundle().apply {
+                putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+            }))
             .addToBackStack("")
             .commitAllowingStateLoss()
     }

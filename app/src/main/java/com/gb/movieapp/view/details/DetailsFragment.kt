@@ -31,20 +31,25 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return binding.getRoot()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie = arguments?.getParcelable<Movie>(BUNDLE_EXTRA)
-        if (movie != null) {
+        arguments?.getParcelable<Movie>(BUNDLE_EXTRA)?.let { movie ->
             binding.originalTitleMovieDetails.text = movie.originalTitle
             binding.titleMovieDetails.text = movie.title
             binding.genreMovieDetails.text = movie.genres.joinToString()
-            binding.durationMovieDetails.text = movie.duration.toString() + " min."
+            binding.durationMovieDetails.text = StringBuilder().run {
+                this.append(movie.duration.toString()).append(" min.")
+            }
             binding.ratingMovieDetails.text = movie.rating.toString()
-            binding.budgetValueMovieDetails.text = movie.budget.toString() + " $"
-            binding.revenueValueMovieDetails.text = movie.revenue.toString() + " $"
+            binding.budgetValueMovieDetails.text = StringBuilder().run {
+                this.append(movie.budget.toString()).append(" \$")
+            }
+            binding.revenueValueMovieDetails.text = StringBuilder().run {
+                this.append(movie.revenue.toString()).append(" \$")
+            }
             binding.releaseDateValueMovieDetails.text = movie.releaseDate
             binding.overviewMovieDetails.text = movie.overview
         }

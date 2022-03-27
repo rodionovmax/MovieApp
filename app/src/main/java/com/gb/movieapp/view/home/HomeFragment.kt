@@ -13,6 +13,7 @@ import com.gb.movieapp.databinding.FragmentHomeBinding
 import com.gb.movieapp.view.MovieCardListener
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.viewmodel.AppState
+import com.gb.movieapp.viewmodel.FavoritesViewModel
 import com.gb.movieapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -23,10 +24,15 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: HomeSectionAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val homeViewModel: HomeViewModel by lazy {
+        ViewModelProvider(this).get(
+            HomeViewModel::class.java
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +44,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         adapter = HomeSectionAdapter()
-        return binding.getRoot()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +53,6 @@ class HomeFragment : Fragment() {
         binding.homeSectionsList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         homeViewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
         homeViewModel.getMoviesFromLocal()
     }
@@ -64,11 +69,24 @@ class HomeFragment : Fragment() {
             is AppState.Error -> {
                 binding.homeFragmentLoadingLayout.visibility = View.GONE
                 Snackbar
-                    .make(binding.homeSectionsList, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
+                    .make(
+                        binding.homeSectionsList,
+                        getString(R.string.error),
+                        Snackbar.LENGTH_INDEFINITE
+                    )
                     .setAction(getString(R.string.reload)) { homeViewModel.getMoviesFromLocal() }
                     .show()
             }
         }
+    }
+
+    private fun View.showSnackBar(
+        text: String,
+        actionText: String,
+        action: (View) -> Unit,
+        length: Int = Snackbar.LENGTH_INDEFINITE
+    ) {
+        Snackbar.make(this, text, length).setAction(actionText, action).show()
     }
 
 
