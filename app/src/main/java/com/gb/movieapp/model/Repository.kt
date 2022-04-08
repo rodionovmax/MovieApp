@@ -5,6 +5,7 @@ interface Repository {
     fun getMovieListFromLocaleStorage(): List<Movie>
     fun getFavoritesListFromLocaleStorage(): List<Movie>
     fun addMovieToFavorites(movie: Movie)
+    fun getMovieListFromServer(): List<MovieListDTO>
 
 
 }

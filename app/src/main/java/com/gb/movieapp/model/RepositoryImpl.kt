@@ -17,4 +17,8 @@ class RepositoryImpl : Repository {
         favorites.add(movie)
     }
 
+    override fun getMovieListFromServer(): List<MovieListDTO> {
+        TODO("Not yet implemented")
+    }
+
 }

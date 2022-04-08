@@ -1,19 +1,18 @@
 package com.gb.movieapp.view.home
 
-import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentHomeBinding
-import com.gb.movieapp.view.MovieCardListener
-import com.gb.movieapp.view.OnFavoritesCheckboxListener
+import com.gb.movieapp.model.MovieDetailsDTO
 import com.gb.movieapp.viewmodel.AppState
-import com.gb.movieapp.viewmodel.FavoritesViewModel
 import com.gb.movieapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -27,6 +26,15 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: HomeSectionAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    // TODO: find how to get the data from the internet for the recyclerview
+//    private val onLoadListener: MoviesListLoader.MoviesLoaderListener =
+//        object : MoviesListLoader.MoviesLoaderListener {
+//            override fun onLoaded(moviesDTO: MovieDetailsDTO) {
+////                displayMovies(moviesDTO)  // TODO
+//            }
+//            override fun onFailed(throwable: Throwable) { //Обработка ошибки
+//            }
+//        }
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(
@@ -47,6 +55,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.homeSectionsList.adapter = adapter

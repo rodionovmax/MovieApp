@@ -57,14 +57,13 @@ class MainActivity : AppCompatActivity(), MovieCardListener, OnFavoritesCheckbox
             }
         }
 
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
+        savedInstanceState?.let {
+            // TODO
+        } ?: run {
+            supportFragmentManager.beginTransaction()
                 .replace(R.id.main_fragment_holder, HomeFragment.newInstance())
                 .commitNow()
         }
-
-
     }
 
     private fun initDrawer(toolbar: androidx.appcompat.widget.Toolbar) {
