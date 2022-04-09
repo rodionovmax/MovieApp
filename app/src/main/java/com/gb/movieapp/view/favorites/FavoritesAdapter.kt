@@ -42,7 +42,8 @@ class FavoritesAdapter(
             itemView.apply {
                 findViewById<TextView>(R.id.title_favorites).text = favorites.originalTitle
                 findViewById<TextView>(R.id.release_date_favorites).text = favorites.releaseDate
-                findViewById<TextView>(R.id.genre_favorites).text = favorites.genres.joinToString()
+//                findViewById<TextView>(R.id.genre_favorites).text = favorites.genres.joinToString()
+                findViewById<TextView>(R.id.genre_favorites).text = favorites.releaseDate
                 findViewById<TextView>(R.id.rating_favorites).text = favorites.rating.toString()
 
                 // Handling click on a favorites card

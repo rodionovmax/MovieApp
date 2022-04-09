@@ -1,5 +1,14 @@
 package com.gb.movieapp.model
 
+import android.content.ContentValues.TAG
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
+import com.gb.movieapp.BuildConfig
+import com.gb.movieapp.view.home.MoviesListLoader
+import com.gb.movieapp.viewmodel.AppState
+
 class RepositoryImpl : Repository {
 
     override fun getMovieDetailsFromServer(): Movie {
@@ -17,8 +26,31 @@ class RepositoryImpl : Repository {
         favorites.add(movie)
     }
 
-    override fun getMovieListFromServer(): List<MovieListDTO> {
-        TODO("Not yet implemented")
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun getMovieListFromServer(sectionId: Int): MutableLiveData<AppState> {
+        val data = MutableLiveData<AppState>()
+        val onLoadListener: MoviesListLoader.MoviesLoaderListener =
+            object : MoviesListLoader.MoviesLoaderListener {
+                override fun onLoaded(moviesDTO: MovieListDTO) {
+                    val movies = moviesDTO.results.map {
+                        Movie(
+                            id = it.id,
+                            originalTitle = it.original_title,
+                            posterUrl = it.poster_path,
+                            releaseDate = it.release_date,
+                            rating = it.vote_average
+                        )
+                    }
+                    data.postValue(AppState.Success(movies))
+                }
+
+                override fun onFailed(throwable: Throwable) {
+                    Log.d(TAG, "onFailed() called with: throwable = $throwable")
+                }
+            }
+        val loader = MoviesListLoader(onLoadListener, sectionId, BuildConfig.TMDB_API_KEY)
+        loader.loadMoviesSectionList()
+        return data
     }
 
 }

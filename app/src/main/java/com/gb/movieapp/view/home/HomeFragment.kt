@@ -9,9 +9,12 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gb.movieapp.BuildConfig
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentHomeBinding
 import com.gb.movieapp.model.MovieDetailsDTO
+import com.gb.movieapp.model.getSections
+import com.gb.movieapp.view.details.MovieDetailsLoader
 import com.gb.movieapp.viewmodel.AppState
 import com.gb.movieapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -26,15 +29,6 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: HomeSectionAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    // TODO: find how to get the data from the internet for the recyclerview
-//    private val onLoadListener: MoviesListLoader.MoviesLoaderListener =
-//        object : MoviesListLoader.MoviesLoaderListener {
-//            override fun onLoaded(moviesDTO: MovieDetailsDTO) {
-////                displayMovies(moviesDTO)  // TODO
-//            }
-//            override fun onFailed(throwable: Throwable) { //Обработка ошибки
-//            }
-//        }
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(
@@ -62,8 +56,16 @@ class HomeFragment : Fragment() {
         binding.homeSectionsList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        homeViewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
-        homeViewModel.getMoviesFromLocal()
+//        homeViewModel.getMoviesFromServer(1)
+        homeViewModel.getDataFromServerSource(1).observe(viewLifecycleOwner) {
+            if (it != null) renderData(it) }
+//        homeViewModel.getLiveData().observe(viewLifecycleOwner) {
+//            if (it != null) renderData(it) }
+//        homeViewModel.getMoviesFromLocal()
+        val sectionId = getSections()
+
+
+
     }
 
     private fun renderData(appState: AppState) {
@@ -97,6 +99,8 @@ class HomeFragment : Fragment() {
     ) {
         Snackbar.make(this, text, length).setAction(actionText, action).show()
     }
+
+
 
 
 }

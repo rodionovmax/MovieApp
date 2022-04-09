@@ -5,6 +5,7 @@ import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.gb.movieapp.model.MovieDetailsDTO
+import com.gb.movieapp.model.MovieListDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -16,7 +17,7 @@ import javax.net.ssl.HttpsURLConnection
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MoviesListLoader(
-//    private val listener: MoviesLoaderListener,
+    private val listener: MoviesLoaderListener,
     private val sectionId: Int,
     private val apiKey: String,
 ) {
@@ -45,17 +46,16 @@ class MoviesListLoader(
 
                     val response = getLines(bufferedReader)
 
-                    val moviesDTO: MovieDetailsDTO =
-                        Gson().fromJson(response, MovieDetailsDTO::class.java)
+                    val moviesListDTO: MovieListDTO =
+                        Gson().fromJson(response, MovieListDTO::class.java)
 
                     handler.post {
-                        moviesDTO
-//                        listener.onLoaded(moviesDTO)
+                        listener.onLoaded(moviesListDTO)
                     }
                 } catch (e: Exception) {
                     Log.e("", "Fail connection", e)
                     e.printStackTrace()
-                    //listener.onFailed(e)
+                    listener.onFailed(e)
                 } finally {
                     urlConnection.disconnect()
                 }
@@ -63,7 +63,7 @@ class MoviesListLoader(
         } catch (e: MalformedURLException) {
             Log.e("", "Fail URI", e)
             e.printStackTrace()
-            //listener.onFailed(e)
+            listener.onFailed(e)
         }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -72,7 +72,7 @@ class MoviesListLoader(
     }
 
     interface MoviesLoaderListener {
-        fun onLoaded(moviesDTO: MovieDetailsDTO)
+        fun onLoaded(moviesDTO: MovieListDTO)
         fun onFailed(throwable: Throwable)
     }
 }
