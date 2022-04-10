@@ -80,7 +80,7 @@ class FavoritesFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         favoritesViewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
-        favoritesViewModel.getFavorites()
+        favoritesViewModel.getFavoritesFromServer()
     }
 
     private fun renderData(appState: AppState) {

@@ -2,6 +2,7 @@ package com.gb.movieapp.model
 
 import androidx.lifecycle.MutableLiveData
 import com.gb.movieapp.viewmodel.AppState
+import com.gb.movieapp.viewmodel.FavoritesViewModel
 
 interface Repository {
     fun getMovieDetailsFromServer(): Movie
@@ -9,6 +10,6 @@ interface Repository {
     fun getFavoritesListFromLocaleStorage(): List<Movie>
     fun addMovieToFavorites(movie: Movie)
     fun getMovieListFromServer(sectionId: Int): MutableLiveData<AppState>
-
+    fun getFavoritesListFromServer(): MutableLiveData<AppState>
 
 }

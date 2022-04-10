@@ -57,8 +57,9 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 //        homeViewModel.getMoviesFromServer(1)
-        homeViewModel.getDataFromServerSource(1).observe(viewLifecycleOwner) {
-            if (it != null) renderData(it) }
+        homeViewModel.getMoviesFromServer(1).observe(viewLifecycleOwner) {
+            if (it != null) renderData(it)
+        }
 //        homeViewModel.getLiveData().observe(viewLifecycleOwner) {
 //            if (it != null) renderData(it) }
 //        homeViewModel.getMoviesFromLocal()

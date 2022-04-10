@@ -22,6 +22,10 @@ android {
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
         def apiKey = properties.getProperty("tmdb_api_key", "")
         it.buildConfigField "String", "TMDB_API_KEY", apiKey
+        def accountId = properties.getProperty("tmdb_account_id", "")
+        it.buildConfigField "String", "TMDB_ACCOUNT_ID", accountId
+        def sessionId = properties.getProperty("tmdb_session_id", "")
+        it.buildConfigField "String", "TMDB_SESSION_ID", sessionId
     }
 
     buildFeatures {
