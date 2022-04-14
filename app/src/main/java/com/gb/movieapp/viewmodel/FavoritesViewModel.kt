@@ -11,14 +11,14 @@ class FavoritesViewModel(
 
     fun getLiveData() = liveDataToObserve
 
-    fun getFavorites() = getFavoritesFromLocal()
+    fun getFavoritesFromLocal() = getFavoritesFromLocalStorage()
 
     fun getFavoritesFromServer() : MutableLiveData<AppState> {
         liveDataToObserve.value = AppState.Loading
         return repoImpl.getFavoritesListFromServer()
     }
 
-    private fun getFavoritesFromLocal() {
+    private fun getFavoritesFromLocalStorage() {
         liveDataToObserve.value = AppState.Loading
         Thread {
             Thread.sleep(1000)
@@ -27,5 +27,4 @@ class FavoritesViewModel(
     }
 
     fun addToFavorites(movie: Movie) = repoImpl.addMovieToFavorites(movie)
-
 }

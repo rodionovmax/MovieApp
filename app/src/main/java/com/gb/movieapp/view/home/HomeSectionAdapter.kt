@@ -12,15 +12,9 @@ import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.favorites.FavoritesFragment
 import kotlinx.android.synthetic.main.section_home.view.*
 
-class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionViewHolder>() {
+class HomeSectionAdapter(private val mapData: MutableList<Pair<Section, List<Movie>>>) : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionViewHolder>() {
 
-    private var sections: List<Sections> = getSections()
-    private var moviesDataList: List<Movie> = getMoviesList()
-
-    fun setMoviesList(data: List<Movie>) {
-        moviesDataList = data
-        notifyDataSetChanged()
-    }
+    private var currentPosition: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeSectionViewHolder {
         val view: View =
@@ -29,11 +23,12 @@ class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionVi
     }
 
     override fun onBindViewHolder(holder: HomeSectionViewHolder, position: Int) {
-        holder.bind(sections[position])
+        holder.bind(mapData[position].first)
+        currentPosition = holder.adapterPosition
     }
 
     override fun getItemCount(): Int {
-        return sections.size
+        return mapData.size
     }
 
     inner class HomeSectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,6 +37,7 @@ class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionVi
         var favoritesListener = itemView.context as OnFavoritesCheckboxListener
 
         private val adapter = HomeMovieAdapter(
+            mapData[currentPosition].second,
             object : FavoritesFragment.OnItemViewClickListener {
                 override fun onItemViewClick(favorites: Movie) {
                     listener.onMovieCardClicked(favorites)
@@ -54,9 +50,9 @@ class HomeSectionAdapter : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionVi
             }
         )
 
-        fun bind(sections: Sections) {
+        fun bind(section: Section) {
             itemView.apply {
-                section_title.text = sections.name
+                section_title.text = section.name
                 home_movie_list.layoutManager =
                     LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
                 home_movie_list.adapter = adapter

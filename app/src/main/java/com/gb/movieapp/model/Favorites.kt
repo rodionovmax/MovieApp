@@ -9,6 +9,7 @@ data class Favorites(
     var id: Int,
     var original_title: String,
     var genres: List<String>,
+    var genre_ids: List<Int>? = null,
     var poster_path: String,
     var release_date: String,
     var vote_average: Double,

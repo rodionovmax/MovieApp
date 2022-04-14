@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentFavoritesBinding
 import com.gb.movieapp.model.Movie
+import com.gb.movieapp.model.Section
 import com.gb.movieapp.view.MovieCardListener
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
+import com.gb.movieapp.view.home.HomeSectionAdapter
 import com.gb.movieapp.viewmodel.AppState
 import com.gb.movieapp.viewmodel.FavoritesViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -79,8 +81,9 @@ class FavoritesFragment : Fragment() {
         binding.favoritesRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        favoritesViewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
-        favoritesViewModel.getFavoritesFromServer()
+        favoritesViewModel.getFavoritesFromServer().observe(viewLifecycleOwner) {
+            if (it != null) renderData(it)
+        }
     }
 
     private fun renderData(appState: AppState) {
@@ -96,7 +99,7 @@ class FavoritesFragment : Fragment() {
                 binding.favoritesFragmentLoadingLayout.visibility = View.GONE
                 Snackbar
                     .make(binding.favoritesRecyclerView, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.reload)) { favoritesViewModel.getFavorites() }
+                    .setAction(getString(R.string.reload)) { favoritesViewModel.getFavoritesFromLocal() }
                     .show()
             }
         }

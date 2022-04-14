@@ -31,6 +31,7 @@ class RepositoryImpl : Repository {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun getMovieListFromServer(sectionId: Int): MutableLiveData<AppState> {
         val data = MutableLiveData<AppState>()
+        data.postValue(AppState.Loading)
         val onLoadListener: MoviesListLoader.MoviesLoaderListener =
             object : MoviesListLoader.MoviesLoaderListener {
                 override fun onLoaded(moviesDTO: MovieListDTO) {
@@ -39,8 +40,8 @@ class RepositoryImpl : Repository {
                             id = it.id,
                             originalTitle = it.original_title,
                             posterUrl = it.poster_path,
-                            releaseDate = it.release_date,
-                            rating = it.vote_average
+                            releaseYear = it.release_date.split("-")[0],
+                            rating = it.vote_average,
                         )
                     }
                     data.postValue(AppState.Success(movies))
@@ -68,7 +69,8 @@ class RepositoryImpl : Repository {
                             genres = it.genres,
                             posterUrl = it.poster_path,
                             releaseDate = it.release_date,
-                            rating = it.vote_average
+                            rating = it.vote_average,
+                            releaseYear = it.release_date.split("-")[0]
                         )
                     }
                     data.postValue(AppState.Success(favorites))

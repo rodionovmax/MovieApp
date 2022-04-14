@@ -25,10 +25,10 @@ class MoviesListLoader(
     fun loadMoviesSectionList() =
         try {
             val uri = when(sectionId) {
-                1 -> URL("https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}")
-                2 -> URL("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}")
-                3 -> URL("https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}")
-                4 -> URL("https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}")
+                0 -> URL("https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}")
+                1 -> URL("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}")
+                2 -> URL("https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}")
+                3 -> URL("https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}")
                 else -> URL("https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}") // TODO: Throw error here instead of placeholder
             }
             val handler = Handler()

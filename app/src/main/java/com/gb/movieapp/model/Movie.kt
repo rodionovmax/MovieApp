@@ -14,14 +14,14 @@ data class Movie(
     var rating: Double,
     var budget: Long? = null,
     var revenue: Long? = null,
-    var releaseDate: String,
-    var releaseYear: Int? = null,
+    var releaseDate: String? = null,
+    var releaseYear: String,
     var overview: String? = null
 ) : Parcelable
 
 
 @Parcelize
-data class Sections(
+data class Section(
     val id: Int,
     val name: String,
 ) : Parcelable
@@ -38,7 +38,7 @@ fun getDefaultMovieDetails() = Movie(
     200000000,
     1866488233,
     "2021-12-15",
-    2021,
+    "2021",
     "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man."
 )
 
@@ -55,7 +55,7 @@ fun getMoviesList(): List<Movie> {
             200000000,
             1866488233,
             "2021-12-15",
-            2021,
+            "2021",
             "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man."
         ),
         Movie(
@@ -69,7 +69,7 @@ fun getMoviesList(): List<Movie> {
             185000000,
             600000000,
             "2022-03-04",
-            2022,
+            "2022",
             "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler."
         ),
         Movie(
@@ -83,7 +83,7 @@ fun getMoviesList(): List<Movie> {
             0,
             0,
             "2022-02-25",
-            2022,
+            "2022",
             "Stranded at a rest stop in the mountains during a blizzard, a recovering addict discovers a kidnapped child hidden in a car belonging to one of the people inside the building which sets her on a terrifying struggle to identify who among them is the kidnapper."
         ),
         Movie(
@@ -97,7 +97,7 @@ fun getMoviesList(): List<Movie> {
             50000000,
             240000000,
             "2021-11-24",
-            2021,
+            "2021",
             "The tale of an extraordinary family, the Madrigals, who live hidden in the mountains of Colombia, in a magical house, in a vibrant town, in a wondrous, charmed place called an Encanto. The magic of the Encanto has blessed every child in the family with a unique gift from super strength to the power to heal—every child except one, Mirabel. But when she discovers that the magic surrounding the Encanto is in danger, Mirabel decides that she, the only ordinary Madrigal, might just be her exceptional family's last hope."
         ),
         Movie(
@@ -111,7 +111,7 @@ fun getMoviesList(): List<Movie> {
             0,
             0,
             "2022-02-25",
-            2022,
+            "2022",
             "After going to extremes to cover up an accident, a corrupt cop's life spirals out of control when he starts receiving threats from a mysterious witness."
         ),
         Movie(
@@ -125,7 +125,7 @@ fun getMoviesList(): List<Movie> {
             43000000,
             10000000,
             "2022-02-10",
-            2022,
+            "2022",
             "Travis Block is a shadowy Government agent who specializes in removing operatives whose covers have been exposed. He then has to uncover a deadly conspiracy within his own ranks that reaches the highest echelons of power."
         ),
         Movie(
@@ -139,7 +139,7 @@ fun getMoviesList(): List<Movie> {
             0,
             0,
             "2022-01-07",
-            2022,
+            "2022",
             "An elite DEA agent returns home after a failed mission when his family makes an unexpected discovery in their house – a stash of money worth \$3 million. They soon face the danger and threat of a newly released criminal and his crew, who will do whatever it takes to retrieve the money, including kidnap the agent’s daughters. Stakes are high and lives are at risk in this head-to-head battle as the agent stops at nothing to protect his family against the money-hungry criminals."
         ),
         Movie(
@@ -153,7 +153,7 @@ fun getMoviesList(): List<Movie> {
             100000000,
             124005195,
             "2021-12-22",
-            2021,
+            "2021",
             "As a collection of history's worst tyrants and criminal masterminds gather to plot a war to wipe out millions, one man must race against time to stop them."
         ),
         Movie(
@@ -167,7 +167,7 @@ fun getMoviesList(): List<Movie> {
             160000000,
             178143,
             "2021-11-04",
-            2021,
+            "2021",
             "An Interpol-issued Red Notice is a global alert to hunt and capture the world's most wanted. But when a daring heist brings together the FBI's top profiler and two rival criminals, there's no telling what will happen."
         ),
         Movie(
@@ -181,7 +181,7 @@ fun getMoviesList(): List<Movie> {
             0,
             0,
             "2022-02-10",
-            2022,
+            "2022",
             "A tech worker with agoraphobia discovers recorded evidence of a violent crime but is met with resistance when she tries to report it. Seeking justice, she must do the thing she fears the most: she must leave her apartment."
         ),
     )
@@ -201,7 +201,7 @@ fun getFavoritesList(): List<Movie> {
             200000000,
             1866488233,
             "2021-12-15",
-            2021,
+            "2021",
             "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man."
         ),
         Movie(
@@ -215,7 +215,7 @@ fun getFavoritesList(): List<Movie> {
             185000000,
             600000000,
             "2022-03-04",
-            2022,
+            "2022",
             "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler."
         ),
         Movie(
@@ -229,18 +229,18 @@ fun getFavoritesList(): List<Movie> {
             100000000,
             124005195,
             "2021-12-22",
-            2021,
+            "2021",
             "As a collection of history's worst tyrants and criminal masterminds gather to plot a war to wipe out millions, one man must race against time to stop them."
         ),
     )
 }
 
 
-fun getSections(): List<Sections> {
+fun getSections(): List<Section> {
     return listOf(
-        Sections(1, "Popular"),
-        Sections(2, "Now Playing"),
-        Sections(3, "Upcoming"),
-        Sections(4, "Top Rated"),
+        Section(0, "Popular"),
+        Section(1, "Now Playing"),
+        Section(2, "Upcoming"),
+        Section(3, "Top Rated"),
     )
 }

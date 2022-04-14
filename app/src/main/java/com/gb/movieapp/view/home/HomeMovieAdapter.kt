@@ -13,11 +13,12 @@ import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.favorites.FavoritesFragment
 
 class HomeMovieAdapter(
+    private var movieDataList: List<Movie>,
     private var onMovieCardClickListener: FavoritesFragment.OnItemViewClickListener?,
     private var onFavoritesCheckboxListener: OnFavoritesCheckboxListener?,
 ) : RecyclerView.Adapter<HomeMovieAdapter.HomeMovieViewHolder>() {
 
-    private var moviesDataList: List<Movie> = getMoviesList()
+//    private var moviesDataList: List<Movie> = getMoviesList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeMovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_card, parent, false)
@@ -25,11 +26,11 @@ class HomeMovieAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeMovieViewHolder, position: Int) {
-        holder.bind(moviesDataList[position])
+        holder.bind(movieDataList[position])
     }
 
     override fun getItemCount(): Int {
-        return moviesDataList.size
+        return movieDataList.size
     }
 
     inner class HomeMovieViewHolder(
