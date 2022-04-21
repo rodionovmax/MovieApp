@@ -7,7 +7,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gb.movieapp.R
+import com.gb.movieapp.model.GenreMap
 import com.gb.movieapp.model.Movie
+import com.gb.movieapp.model.mapGenres
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
 
 class FavoritesAdapter(
@@ -42,8 +44,7 @@ class FavoritesAdapter(
             itemView.apply {
                 findViewById<TextView>(R.id.title_favorites).text = favorites.originalTitle
                 findViewById<TextView>(R.id.release_date_favorites).text = favorites.releaseDate
-                findViewById<TextView>(R.id.genre_favorites).text = favorites.genres?.joinToString()
-//                findViewById<TextView>(R.id.genre_favorites).text = favorites.releaseDate
+                findViewById<TextView>(R.id.genre_favorites).text = convertIdsToGenres(favorites.genreIds).toString().drop(1).dropLast(1)
                 findViewById<TextView>(R.id.rating_favorites).text = favorites.rating.toString()
 
                 // Handling click on a favorites card
@@ -59,7 +60,20 @@ class FavoritesAdapter(
                 }
             }
         }
-
     }
 
+    private fun convertIdsToGenres(genreIdList: List<Int>?) : List<String> {
+        val genres: MutableList<String> = mutableListOf()
+        if (genreIdList != null) {
+            for (genreId in genreIdList) {
+                for (i in 0 .. mapGenres().size) {
+                    if (genreId == mapGenres()[i].id) {
+                        genres.add(mapGenres()[i].name)
+                        break
+                    }
+                }
+            }
+        }
+        return genres
+    }
 }

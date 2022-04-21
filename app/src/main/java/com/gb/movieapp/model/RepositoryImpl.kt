@@ -67,6 +67,7 @@ class RepositoryImpl : Repository {
                             id = it.id,
                             originalTitle = it.original_title,
                             genres = it.genres,
+                            genreIds = it.genre_ids,
                             posterUrl = it.poster_path,
                             releaseDate = it.release_date,
                             rating = it.vote_average,
