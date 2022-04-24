@@ -30,7 +30,10 @@ class HomeViewModel(
         }.start()
     }
 
-    fun addToFavorites(movie: Movie) = repoImpl.addMovieToFavorites(movie)
+    fun addToFavorites(movieId : Int, addedFlag : Boolean, sessionId: String): MutableLiveData<AppState> {
+        liveDataToObserve.value = AppState.Loading
+        return repoImpl.addMovieToFavorites(movieId, addedFlag, sessionId)
+    }
 
 }
 

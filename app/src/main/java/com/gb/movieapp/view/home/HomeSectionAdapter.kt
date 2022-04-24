@@ -12,7 +12,7 @@ import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.favorites.FavoritesFragment
 import kotlinx.android.synthetic.main.section_home.view.*
 
-class HomeSectionAdapter(private val mapData: MutableList<Pair<Section, List<Movie>>>) : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionViewHolder>() {
+class HomeSectionAdapter(private val mapData: MutableList<Pair<Section, List<Movie>>>, val favoritesListener : OnFavoritesCheckboxListener) : RecyclerView.Adapter<HomeSectionAdapter.HomeSectionViewHolder>() {
 
     private var currentPosition: Int = 0
 
@@ -34,7 +34,6 @@ class HomeSectionAdapter(private val mapData: MutableList<Pair<Section, List<Mov
     inner class HomeSectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var listener = itemView.context as MovieCardListener
-        var favoritesListener = itemView.context as OnFavoritesCheckboxListener
 
         private val adapter = HomeMovieAdapter(
             mapData[currentPosition].second,

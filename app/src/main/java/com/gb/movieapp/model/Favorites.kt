@@ -19,3 +19,12 @@ data class Favorites(
 data class FavoritesListDTO(
     @SerializedName("results") var results: ArrayList<Favorites>,
 )
+
+data class AddedToFavoritesDTO(
+    @SerializedName("success")
+    var success: Boolean,
+    @SerializedName("status_code")
+    var statusCode: Int,
+    @SerializedName("status_message")
+    var statusMessage: String,
+)

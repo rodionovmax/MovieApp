@@ -20,7 +20,7 @@ import com.gb.movieapp.viewmodel.FavoritesViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(), OnFavoritesCheckboxListener {
 
     private lateinit var listener: MovieCardListener
     private lateinit var favoritesListener: OnFavoritesCheckboxListener
@@ -44,11 +44,11 @@ class FavoritesFragment : Fragment() {
         } else {
             throw RuntimeException(requireContext().toString())
         }
-        if (context is OnFavoritesCheckboxListener) {
-            favoritesListener = context
-        } else {
-            throw RuntimeException(requireContext().toString())
-        }
+//        if (context is OnFavoritesCheckboxListener) {
+//            favoritesListener = context
+//        } else {
+//            throw RuntimeException(requireContext().toString())
+//        }
     }
 
     private val adapter = FavoritesAdapter(object : OnItemViewClickListener {
@@ -56,11 +56,8 @@ class FavoritesFragment : Fragment() {
             listener.onMovieCardClicked(favorites)
         }
     },
-        object : OnFavoritesCheckboxListener {
-            override fun onItemChecked(p0: View, movie: Movie) {
-                favoritesListener.onItemChecked(p0, movie)
-            }
-        })
+        this
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +87,7 @@ class FavoritesFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 binding.favoritesFragmentLoadingLayout.visibility = View.GONE
-                adapter.setFavoritesList(appState.success)
+                adapter.setFavoritesList(appState.success as List<Movie>) // TODO: find how to cast
             }
             is AppState.Loading -> {
                 binding.favoritesFragmentLoadingLayout.visibility = View.VISIBLE
@@ -107,6 +104,12 @@ class FavoritesFragment : Fragment() {
 
     interface OnItemViewClickListener {
         fun onItemViewClick(favorites: Movie)
+    }
+
+    // TODO: logic to remove from favorites
+    //
+    override fun onItemChecked(p0: View, movie: Movie) {
+        TODO("Not yet implemented")
     }
 
 

@@ -62,6 +62,7 @@ class FavoritesAdapter(
         }
     }
 
+    // Convert genre_ids to genres
     private fun convertIdsToGenres(genreIdList: List<Int>?) : List<String> {
         val genres: MutableList<String> = mutableListOf()
         if (genreIdList != null) {

@@ -19,7 +19,7 @@ import com.gb.movieapp.view.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), MovieCardListener, OnFavoritesCheckboxListener {
+class MainActivity : AppCompatActivity(), MovieCardListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -148,19 +148,5 @@ class MainActivity : AppCompatActivity(), MovieCardListener, OnFavoritesCheckbox
             }))
             .addToBackStack("")
             .commitAllowingStateLoss()
-    }
-
-    override fun onItemChecked(p0: View, movie: Movie) {
-        p0 as CheckBox
-        val isChecked: Boolean = p0.isChecked
-        when (p0.id) {
-            R.id.checkbox_favorite_movie, R.id.favorites_checkbox -> if (isChecked) {
-                Toast.makeText(this, "Movie is added to favorites", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Movie is removed from favorites", Toast.LENGTH_SHORT).show()
-            }
-        }
-        val bundle = Bundle()
-        bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
     }
 }

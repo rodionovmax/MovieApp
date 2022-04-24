@@ -26,5 +26,5 @@ class FavoritesViewModel(
         }.start()
     }
 
-    fun addToFavorites(movie: Movie) = repoImpl.addMovieToFavorites(movie)
+//    fun addToFavorites(movie: Movie) = repoImpl.addMovieToFavorites(movie)
 }

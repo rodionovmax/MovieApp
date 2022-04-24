@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.gb.movieapp.BuildConfig
+import com.gb.movieapp.model.request.FavoritesPostModel
 import com.gb.movieapp.view.favorites.FavoritesListLoader
+import com.gb.movieapp.view.home.AddToFavoritesLoader
 import com.gb.movieapp.view.home.MoviesListLoader
 import com.gb.movieapp.viewmodel.AppState
 
@@ -24,8 +26,36 @@ class RepositoryImpl : Repository {
     private val favorites: ArrayList<Movie> =
         getFavoritesListFromLocaleStorage() as ArrayList<Movie>
 
-    override fun addMovieToFavorites(movie: Movie) {
-        favorites.add(movie)
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun addMovieToFavorites(
+        movieId: Int,
+        addedFlag: Boolean,
+        sessionId: String
+    ): MutableLiveData<AppState> {
+        val data = MutableLiveData<AppState>()
+        data.postValue(AppState.Loading)
+        val onLoadListener: AddToFavoritesLoader.AddToFavoritesLoaderListener =
+            object : AddToFavoritesLoader.AddToFavoritesLoaderListener {
+                override fun onLoaded(addedToFavorites: AddedToFavoritesDTO) {
+                    data.postValue(AppState.Success(addedToFavorites.success))
+                }
+
+                override fun onFailed(throwable: Throwable) {
+                    Log.d(
+                        sCustomTag,
+                        "addMovieToFavorites onFailed() called with: throwable = $throwable"
+                    )
+                }
+            }
+        val loader = AddToFavoritesLoader(onLoadListener, sessionId)
+        loader.addToFavorites(
+            FavoritesPostModel(
+                mediaType = "movie",
+                mediaId = movieId,
+                favorite = addedFlag
+            )
+        )
+        return data
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -48,7 +78,10 @@ class RepositoryImpl : Repository {
                 }
 
                 override fun onFailed(throwable: Throwable) {
-                    Log.d(sCustomTag, "getMovieListFromServer onFailed() called with: throwable = $throwable")
+                    Log.d(
+                        sCustomTag,
+                        "getMovieListFromServer onFailed() called with: throwable = $throwable"
+                    )
                 }
             }
         val loader = MoviesListLoader(onLoadListener, sectionId, BuildConfig.TMDB_API_KEY)
@@ -60,7 +93,7 @@ class RepositoryImpl : Repository {
     override fun getFavoritesListFromServer(): MutableLiveData<AppState> {
         val data = MutableLiveData<AppState>()
         val onLoadListener: FavoritesListLoader.FavoritesLoaderListener =
-            object : FavoritesListLoader.FavoritesLoaderListener  {
+            object : FavoritesListLoader.FavoritesLoaderListener {
                 override fun onLoaded(favoritesDTO: FavoritesListDTO) {
                     val favorites = favoritesDTO.results.map {
                         Movie(
@@ -78,10 +111,18 @@ class RepositoryImpl : Repository {
                 }
 
                 override fun onFailed(throwable: Throwable) {
-                    Log.d(sCustomTag, "getFavoritesListFromServer onFailed() called with: throwable = $throwable")
+                    Log.d(
+                        sCustomTag,
+                        "getFavoritesListFromServer onFailed() called with: throwable = $throwable"
+                    )
                 }
             }
-        val loader = FavoritesListLoader(onLoadListener, BuildConfig.TMDB_ACCOUNT_ID, BuildConfig.TMDB_API_KEY, BuildConfig.TMDB_SESSION_ID)
+        val loader = FavoritesListLoader(
+            onLoadListener,
+            BuildConfig.TMDB_ACCOUNT_ID,
+            BuildConfig.TMDB_API_KEY,
+            BuildConfig.TMDB_SESSION_ID
+        )
         loader.loadFavorites()
         return data
     }
