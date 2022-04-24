@@ -78,7 +78,7 @@
             android:id="@+id/checkbox_favorite_movie"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:button="@drawable/selector_favorites_item"
+            android:button="@drawable/favorites_flag_movie_list"
             app:useMaterialThemeColors="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

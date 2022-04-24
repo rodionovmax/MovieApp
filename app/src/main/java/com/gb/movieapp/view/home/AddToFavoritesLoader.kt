@@ -5,7 +5,7 @@ import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.gb.movieapp.BuildConfig
-import com.gb.movieapp.model.AddedToFavoritesDTO
+import com.gb.movieapp.model.ChangeFavoritesDTO
 import com.gb.movieapp.model.request.FavoritesPostModel
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -50,8 +50,8 @@ class AddToFavoritesLoader(
 
                     val response = getLines(bufferedReader)
 
-                    val addedToFavorites: AddedToFavoritesDTO =
-                        Gson().fromJson(response, AddedToFavoritesDTO::class.java)
+                    val addedToFavorites: ChangeFavoritesDTO =
+                        Gson().fromJson(response, ChangeFavoritesDTO::class.java)
 
                     handler.post {
                         listener.onLoaded(addedToFavorites)
@@ -76,7 +76,7 @@ class AddToFavoritesLoader(
     }
 
     interface AddToFavoritesLoaderListener {
-        fun onLoaded(addedToFavorites: AddedToFavoritesDTO)
+        fun onLoaded(addedToFavorites: ChangeFavoritesDTO)
         fun onFailed(throwable: Throwable)
     }
 }

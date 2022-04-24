@@ -14,18 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gb.movieapp.BuildConfig
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentHomeBinding
-import com.gb.movieapp.model.AddedToFavoritesDTO
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.Section
 import com.gb.movieapp.model.getSections
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
-import com.gb.movieapp.view.details.DetailsFragment
+import com.gb.movieapp.view.UpdateFavoritesListener
 import com.gb.movieapp.viewmodel.AppState
-import com.gb.movieapp.viewmodel.HomeViewModel
+import com.gb.movieapp.viewmodel.MyViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
-class HomeFragment : Fragment(), OnFavoritesCheckboxListener {
+class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesListener {
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -36,9 +35,9 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener {
     private val binding get() = _binding!!
     private var mapData: MutableList<Pair<Section, List<Movie>>> = mutableListOf()
 
-    private val homeViewModel: HomeViewModel by lazy {
+    private val myViewModel: MyViewModel by lazy {
         ViewModelProvider(this).get(
-            HomeViewModel::class.java
+            MyViewModel::class.java
         )
     }
 
@@ -63,7 +62,7 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         for (sectionId in 0 until getSections().size) {
-            homeViewModel.getMoviesFromServer(sectionId).observe(viewLifecycleOwner) {
+            myViewModel.getMoviesFromServer(sectionId).observe(viewLifecycleOwner) {
                 if (it != null) renderData(it, sectionId)
             }
         }
@@ -75,6 +74,7 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener {
             is AppState.Success -> {
                 val sectionName : String = getSections()[sectionId].name
                 binding.homeFragmentLoadingLayout.visibility = View.GONE
+                @Suppress("UNCHECKED_CAST")
                 mapData.add(Pair(Section(sectionId, sectionName), appState.success as List<Movie>))
                 adapter = HomeSectionAdapter(mapData, this)
                 binding.homeSectionsList.adapter = adapter
@@ -90,7 +90,7 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener {
                         getString(R.string.error),
                         Snackbar.LENGTH_INDEFINITE
                     )
-                    .setAction(getString(R.string.reload)) { homeViewModel.getMoviesFromLocal() }
+                    .setAction(getString(R.string.reload)) { myViewModel.getMoviesFromLocal() }
                     .show()
             }
         }
@@ -110,34 +110,35 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener {
         val isChecked: Boolean = p0.isChecked
         when (p0.id) {
             R.id.checkbox_favorite_movie, R.id.favorites_checkbox -> if (isChecked) {
-                addToFavorites(movie.id, true)
+                updateFavorites(movie.id, true)
             } else {
-                addToFavorites(movie.id, false)
+                updateFavorites(movie.id, false)
             }
         }
     }
 
-    fun addToFavorites(movieId : Int, addedFlag : Boolean) {
-        homeViewModel.addToFavorites(movieId, addedFlag, BuildConfig.TMDB_SESSION_ID).observe(viewLifecycleOwner) {
-            if (it != null) renderDataToMarkAsFavorites(it)
+    override fun updateFavorites(movieId : Int, addedFlag : Boolean) {
+        myViewModel.markAsFavorite(movieId, addedFlag, BuildConfig.TMDB_SESSION_ID).observe(viewLifecycleOwner) {
+            if (it != null) renderDataToMarkAsFavorites(it, addedFlag)
         }
     }
 
-    private fun renderDataToMarkAsFavorites(appState: AppState) {
+    private fun renderDataToMarkAsFavorites(appState: AppState, addedFlag: Boolean) {
         when (appState) {
             is AppState.Success -> {
                 val data = appState.success as Boolean
                 if (data) {
-                    Toast.makeText(requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
-                    // TODO: show if user adding or removing from favorites
+                    if (addedFlag) {
+                        Toast.makeText(requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             is AppState.Loading -> {
-                // TODO: show if user adding or removing from favorites
-                Toast.makeText(requireContext(), "Loading in progress", Toast.LENGTH_SHORT).show()
+
             }
             is AppState.Error -> {
-                // TODO: show error
                 Toast.makeText(requireContext(), "Error ...", Toast.LENGTH_SHORT).show()
             }
         }

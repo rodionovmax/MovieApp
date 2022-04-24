@@ -8,6 +8,7 @@ interface Repository {
     fun getMovieListFromLocaleStorage(): List<Movie>
     fun getFavoritesListFromLocaleStorage(): List<Movie>
     fun addMovieToFavorites(movieId : Int, addedFlag : Boolean, sessionId : String) : MutableLiveData<AppState>
+    fun removeMovieFromFavorites(movieId : Int, addedFlag : Boolean, sessionId : String) : MutableLiveData<AppState>
     fun getMovieListFromServer(sectionId: Int): MutableLiveData<AppState>
     fun getFavoritesListFromServer(): MutableLiveData<AppState>
 

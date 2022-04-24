@@ -7,12 +7,18 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Favorites(
     var id: Int,
-    var original_title: String,
+    @SerializedName("original_title")
+    var originalTitle: String,
+    @SerializedName("genres")
     var genres: List<String>,
-    var genre_ids: List<Int>? = null,
-    var poster_path: String,
-    var release_date: String,
-    var vote_average: Double,
+    @SerializedName("genre_ids")
+    var genreIds: List<Int>? = null,
+    @SerializedName("poster_path")
+    var posterPath: String,
+    @SerializedName("release_date")
+    var releaseDate: String,
+    @SerializedName("vote_average")
+    var voteAverage: Double,
 ) : Parcelable
 
 
@@ -20,7 +26,7 @@ data class FavoritesListDTO(
     @SerializedName("results") var results: ArrayList<Favorites>,
 )
 
-data class AddedToFavoritesDTO(
+data class ChangeFavoritesDTO(
     @SerializedName("success")
     var success: Boolean,
     @SerializedName("status_code")

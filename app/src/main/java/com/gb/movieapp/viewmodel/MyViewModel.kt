@@ -6,7 +6,7 @@ import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.Repository
 import com.gb.movieapp.model.RepositoryImpl
 
-class HomeViewModel(
+class MyViewModel(
     private var liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
     private val repoImpl: Repository = RepositoryImpl()
 ) : ViewModel() {
@@ -30,9 +30,24 @@ class HomeViewModel(
         }.start()
     }
 
-    fun addToFavorites(movieId : Int, addedFlag : Boolean, sessionId: String): MutableLiveData<AppState> {
+    fun markAsFavorite(movieId : Int, addedFlag : Boolean, sessionId: String): MutableLiveData<AppState> {
         liveDataToObserve.value = AppState.Loading
         return repoImpl.addMovieToFavorites(movieId, addedFlag, sessionId)
+    }
+
+    fun getFavoritesFromLocal() = getFavoritesFromLocalStorage()
+
+    fun getFavoritesFromServer() : MutableLiveData<AppState> {
+        liveDataToObserve.value = AppState.Loading
+        return repoImpl.getFavoritesListFromServer()
+    }
+
+    private fun getFavoritesFromLocalStorage() {
+        liveDataToObserve.value = AppState.Loading
+        Thread {
+            Thread.sleep(1000)
+            liveDataToObserve.postValue(AppState.Success(repoImpl.getFavoritesListFromLocaleStorage()))
+        }.start()
     }
 
 }

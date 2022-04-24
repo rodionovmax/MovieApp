@@ -63,7 +63,7 @@ class DetailsFragment : Fragment() {
         with(binding) {
             detailsMainView.visibility = View.VISIBLE
             detailsLoadingLayout.visibility = View.GONE
-            originalTitleMovieDetails.text = movieDetailsDTO.original_title
+            originalTitleMovieDetails.text = movieDetailsDTO.originalTitle
             titleMovieDetails.text = movieDetailsDTO.title
             genreMovieDetails.text = movieDetailsDTO.genres.joinToString {
                 it.name
@@ -71,14 +71,14 @@ class DetailsFragment : Fragment() {
             durationMovieDetails.text = StringBuilder().run {
                 this.append(movieDetailsDTO.runtime.toString()).append(" min.")
             }
-            ratingMovieDetails.text = movieDetailsDTO.vote_average.toString()
+            ratingMovieDetails.text = movieDetailsDTO.voteAverage.toString()
             budgetValueMovieDetails.text = StringBuilder().run {
                 this.append(movieDetailsDTO.budget.toString()).append(" \$")
             }
             revenueValueMovieDetails.text = StringBuilder().run {
                 this.append(movieDetailsDTO.revenue.toString()).append(" \$")
             }
-            releaseDateValueMovieDetails.text = movieDetailsDTO.release_date
+            releaseDateValueMovieDetails.text = movieDetailsDTO.releaseDate
             overviewMovieDetails.text = movieDetailsDTO.overview
         }
     }

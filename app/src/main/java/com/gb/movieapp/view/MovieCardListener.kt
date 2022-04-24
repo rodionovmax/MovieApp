@@ -10,3 +10,7 @@ interface MovieCardListener {
 interface OnFavoritesCheckboxListener {
     fun onItemChecked(p0: View, movie: Movie)
 }
+
+interface UpdateFavoritesListener {
+    fun updateFavorites(movieId : Int, addedFlag : Boolean)
+}

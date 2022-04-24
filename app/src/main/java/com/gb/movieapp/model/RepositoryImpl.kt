@@ -36,7 +36,7 @@ class RepositoryImpl : Repository {
         data.postValue(AppState.Loading)
         val onLoadListener: AddToFavoritesLoader.AddToFavoritesLoaderListener =
             object : AddToFavoritesLoader.AddToFavoritesLoaderListener {
-                override fun onLoaded(addedToFavorites: AddedToFavoritesDTO) {
+                override fun onLoaded(addedToFavorites: ChangeFavoritesDTO) {
                     data.postValue(AppState.Success(addedToFavorites.success))
                 }
 
@@ -58,6 +58,14 @@ class RepositoryImpl : Repository {
         return data
     }
 
+    override fun removeMovieFromFavorites(
+        movieId: Int,
+        addedFlag: Boolean,
+        sessionId: String
+    ): MutableLiveData<AppState> {
+        TODO("Not yet implemented")
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun getMovieListFromServer(sectionId: Int): MutableLiveData<AppState> {
         val data = MutableLiveData<AppState>()
@@ -68,10 +76,10 @@ class RepositoryImpl : Repository {
                     val movies = moviesDTO.results.map {
                         Movie(
                             id = it.id,
-                            originalTitle = it.original_title,
-                            posterUrl = it.poster_path,
-                            releaseYear = it.release_date.split("-")[0],
-                            rating = it.vote_average,
+                            originalTitle = it.originalTitle,
+                            posterUrl = it.posterPath,
+                            releaseYear = it.releaseDate.split("-")[0],
+                            rating = it.voteAverage,
                         )
                     }
                     data.postValue(AppState.Success(movies))
@@ -98,13 +106,13 @@ class RepositoryImpl : Repository {
                     val favorites = favoritesDTO.results.map {
                         Movie(
                             id = it.id,
-                            originalTitle = it.original_title,
+                            originalTitle = it.originalTitle,
                             genres = it.genres,
-                            genreIds = it.genre_ids,
-                            posterUrl = it.poster_path,
-                            releaseDate = it.release_date,
-                            rating = it.vote_average,
-                            releaseYear = it.release_date.split("-")[0]
+                            genreIds = it.genreIds,
+                            posterUrl = it.posterPath,
+                            releaseDate = it.releaseDate,
+                            rating = it.voteAverage,
+                            releaseYear = it.releaseDate.split("-")[0]
                         )
                     }
                     data.postValue(AppState.Success(favorites))

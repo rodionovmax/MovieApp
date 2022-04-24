@@ -83,12 +83,12 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="16dp"
-            android:button="@drawable/selector_favorites_item"
+            android:button="@drawable/favorites_flag_favorites"
             app:useMaterialThemeColors="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_favorite_border"
+            app:srcCompat="@drawable/ic_favorite_filled"
             android:contentDescription="@string/imageview_flag_favorite" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
