@@ -11,16 +11,17 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gb.movieapp.BuildConfig
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentHomeBinding
+import com.gb.movieapp.model.ChangeFavoritesDTO
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.Section
 import com.gb.movieapp.model.getSections
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.UpdateFavoritesListener
+import com.gb.movieapp.viewmodel.AddToFavoritesViewModel
 import com.gb.movieapp.viewmodel.AppState
-import com.gb.movieapp.viewmodel.MyViewModel
+import com.gb.movieapp.viewmodel.MovieListViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -35,9 +36,15 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
     private val binding get() = _binding!!
     private var mapData: MutableList<Pair<Section, List<Movie>>> = mutableListOf()
 
-    private val myViewModel: MyViewModel by lazy {
+    private val addToFavoritesViewModel: AddToFavoritesViewModel by lazy {
         ViewModelProvider(this).get(
-            MyViewModel::class.java
+            AddToFavoritesViewModel::class.java
+        )
+    }
+
+    private val movieListViewModel: MovieListViewModel by lazy {
+        ViewModelProvider(this).get(
+            MovieListViewModel::class.java
         )
     }
 
@@ -62,9 +69,10 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         for (sectionId in 0 until getSections().size) {
-            myViewModel.getMoviesFromServer(sectionId).observe(viewLifecycleOwner) {
+            movieListViewModel.movieListLiveData.observe(viewLifecycleOwner) {
                 if (it != null) renderData(it, sectionId)
             }
+            movieListViewModel.getMovieListFromRemoteSource(sectionId)
         }
     }
 
@@ -84,14 +92,7 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
             }
             is AppState.Error -> {
                 binding.homeFragmentLoadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(
-                        binding.homeSectionsList,
-                        getString(R.string.error),
-                        Snackbar.LENGTH_INDEFINITE
-                    )
-                    .setAction(getString(R.string.reload)) { myViewModel.getMoviesFromLocal() }
-                    .show()
+                Toast.makeText(requireContext(), "Oops something went wrong with loading movies list...", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -118,16 +119,15 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
     }
 
     override fun updateFavorites(movieId : Int, addedFlag : Boolean) {
-        myViewModel.markAsFavorite(movieId, addedFlag, BuildConfig.TMDB_SESSION_ID).observe(viewLifecycleOwner) {
-            if (it != null) renderDataToMarkAsFavorites(it, addedFlag)
-        }
+        addToFavoritesViewModel.addToFavoritesLiveData.observe(viewLifecycleOwner) { renderDataToMarkAsFavorites(it, addedFlag) }
+        addToFavoritesViewModel.markAsFavorite(movieId, addedFlag)
     }
 
     private fun renderDataToMarkAsFavorites(appState: AppState, addedFlag: Boolean) {
         when (appState) {
             is AppState.Success -> {
-                val data = appState.success as Boolean
-                if (data) {
+                val data = appState.success as ChangeFavoritesDTO
+                if (data.success) {
                     if (addedFlag) {
                         Toast.makeText(requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
                     } else {

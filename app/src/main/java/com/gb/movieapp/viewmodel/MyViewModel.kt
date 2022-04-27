@@ -2,10 +2,10 @@ package com.gb.movieapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.gb.movieapp.model.Movie
-import com.gb.movieapp.model.Repository
-import com.gb.movieapp.model.RepositoryImpl
+import com.gb.movieapp.repository.Repository
+import com.gb.movieapp.repository.RepositoryImpl
 
+// TODO: Can be deleted
 class MyViewModel(
     private var liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
     private val repoImpl: Repository = RepositoryImpl()

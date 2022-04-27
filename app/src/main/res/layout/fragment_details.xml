@@ -51,8 +51,7 @@
                 android:layout_height="220dp"
                 android:contentDescription="@string/imageviewPoster"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_movie_details"
-                app:srcCompat="@drawable/mpd" />
+                app:layout_constraintTop_toBottomOf="@+id/title_movie_details" />
 
             <TextView
                 android:id="@+id/genre_movie_details"

@@ -1,16 +1,19 @@
-package com.gb.movieapp.model
+package com.gb.movieapp.repository
 
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.gb.movieapp.BuildConfig
+import com.gb.movieapp.model.*
 import com.gb.movieapp.model.request.FavoritesPostModel
 import com.gb.movieapp.view.favorites.FavoritesListLoader
 import com.gb.movieapp.view.home.AddToFavoritesLoader
 import com.gb.movieapp.view.home.MoviesListLoader
 import com.gb.movieapp.viewmodel.AppState
 
+
+// TODO: Can be deleted
 class RepositoryImpl : Repository {
 
     val sCustomTag = "My Custom Tag"

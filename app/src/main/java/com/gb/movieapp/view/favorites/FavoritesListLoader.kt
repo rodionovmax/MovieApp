@@ -13,6 +13,8 @@ import java.net.URL
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
+
+// TODO: Can be deleted
 class FavoritesListLoader(
     private val listener: FavoritesLoaderListener,
     private val accountId: String,

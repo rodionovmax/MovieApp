@@ -15,6 +15,7 @@ import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 
+// TODO: Can be deleted
 @RequiresApi(Build.VERSION_CODES.N)
 class MoviesListLoader(
     private val listener: MoviesLoaderListener,

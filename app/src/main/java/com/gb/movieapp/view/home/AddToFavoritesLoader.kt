@@ -17,6 +17,7 @@ import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 
+// TODO: Can be deleted
 class AddToFavoritesLoader(
     private val listener: AddToFavoritesLoaderListener,
     private val sessionId: String,

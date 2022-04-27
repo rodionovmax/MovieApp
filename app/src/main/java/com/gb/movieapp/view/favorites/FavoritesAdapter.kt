@@ -4,12 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.gb.movieapp.R
+import com.gb.movieapp.model.Favorites
 import com.gb.movieapp.model.GenreMap
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.mapGenres
+import com.gb.movieapp.utils.PICTURE_BASE_URL
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
 
 class FavoritesAdapter(
@@ -46,6 +50,7 @@ class FavoritesAdapter(
                 findViewById<TextView>(R.id.release_date_favorites).text = favorites.releaseDate
                 findViewById<TextView>(R.id.genre_favorites).text = convertIdsToGenres(favorites.genreIds).toString().drop(1).dropLast(1)
                 findViewById<TextView>(R.id.rating_favorites).text = favorites.rating.toString()
+                findViewById<ImageView>(R.id.iv_poster).load(PICTURE_BASE_URL + favorites.posterUrl)
 
                 // Handling click on a favorites card
                 setOnClickListener {

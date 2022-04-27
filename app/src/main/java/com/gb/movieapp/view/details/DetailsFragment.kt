@@ -5,13 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.gb.movieapp.BuildConfig
+import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import com.gb.movieapp.databinding.FragmentDetailsBinding
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.MovieDetailsDTO
 import com.gb.movieapp.model.getDefaultMovieDetails
+import com.gb.movieapp.utils.PICTURE_BASE_URL
+import com.gb.movieapp.viewmodel.AppState
+import com.gb.movieapp.viewmodel.MovieDetailsViewModel
 
 class DetailsFragment : Fragment() {
 
@@ -27,15 +32,10 @@ class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var movieDetailsBundle: Movie
-    private val onLoadListener: MovieDetailsLoader.MovieDetailsLoaderListener =
-        object : MovieDetailsLoader.MovieDetailsLoaderListener {
-            override fun onLoaded(movieDetailsDTO: MovieDetailsDTO) {
-                displayMovieDetails(movieDetailsDTO)
-            }
-            override fun onFailed(throwable: Throwable) {
-                // TODO: Обработка ошибки
-            }
-        }
+
+    private val detailsViewModel: MovieDetailsViewModel by lazy {
+        ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +53,28 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieDetailsBundle = arguments?.getParcelable(BUNDLE_EXTRA) ?: getDefaultMovieDetails()
-        binding.detailsMainView.visibility = View.GONE
-        binding.detailsLoadingLayout.visibility = View.VISIBLE
-        val loader = MovieDetailsLoader(onLoadListener, movieDetailsBundle.id, BuildConfig.TMDB_API_KEY)
-        loader.loadMovieDetails()
+
+        detailsViewModel.detailsLiveData.observe(viewLifecycleOwner) { renderData(it) }
+        detailsViewModel.getMovieDetailsFromRemoteSource(movieDetailsBundle.id)
+    }
+
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success -> {
+                binding.detailsMainView.visibility = View.VISIBLE
+                binding.detailsLoadingLayout.visibility = View.GONE
+                displayMovieDetails(appState.success as MovieDetailsDTO)
+            }
+            is AppState.Loading -> {
+                binding.detailsMainView.visibility = View.GONE
+                binding.detailsLoadingLayout.visibility = View.VISIBLE
+            }
+            is AppState.Error -> {
+                binding.detailsMainView.visibility = View.VISIBLE
+                binding.detailsLoadingLayout.visibility = View.GONE
+                Toast.makeText(requireContext(), "Oops something went wrong with loading movie details...", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun displayMovieDetails(movieDetailsDTO: MovieDetailsDTO) {
@@ -65,6 +83,7 @@ class DetailsFragment : Fragment() {
             detailsLoadingLayout.visibility = View.GONE
             originalTitleMovieDetails.text = movieDetailsDTO.originalTitle
             titleMovieDetails.text = movieDetailsDTO.title
+            ivPoster.load(PICTURE_BASE_URL + movieDetailsDTO.posterPath)
             genreMovieDetails.text = movieDetailsDTO.genres.joinToString {
                 it.name
             }

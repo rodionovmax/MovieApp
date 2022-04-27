@@ -10,16 +10,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gb.movieapp.BuildConfig
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentFavoritesBinding
+import com.gb.movieapp.model.ChangeFavoritesDTO
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.view.MovieCardListener
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.UpdateFavoritesListener
+import com.gb.movieapp.viewmodel.AddToFavoritesViewModel
 import com.gb.movieapp.viewmodel.AppState
-import com.gb.movieapp.viewmodel.MyViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.gb.movieapp.viewmodel.FavoritesListViewModel
 
 
 class FavoritesFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesListener {
@@ -28,9 +28,15 @@ class FavoritesFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavorit
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val myViewModel: MyViewModel by lazy {
+    private val addToFavoritesViewModel: AddToFavoritesViewModel by lazy {
         ViewModelProvider(this).get(
-            MyViewModel::class.java
+            AddToFavoritesViewModel::class.java
+        )
+    }
+
+    private val favoritesListViewModel: FavoritesListViewModel by lazy {
+        ViewModelProvider(this).get(
+            FavoritesListViewModel::class.java
         )
     }
 
@@ -78,9 +84,8 @@ class FavoritesFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavorit
     }
 
     private fun getFavoritesListFromViewModel() {
-        myViewModel.getFavoritesFromServer().observe(viewLifecycleOwner) {
-            if (it != null) renderData(it)
-        }
+        favoritesListViewModel.favoritesListLiveData.observe(viewLifecycleOwner) {renderData(it)}
+        favoritesListViewModel.getFavoritesListFromRemoteSource()
     }
 
     private fun renderData(appState: AppState) {
@@ -95,10 +100,7 @@ class FavoritesFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavorit
             }
             is AppState.Error -> {
                 binding.favoritesFragmentLoadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(binding.favoritesRecyclerView, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.reload)) { myViewModel.getFavoritesFromLocal() }
-                    .show()
+                Toast.makeText(requireContext(), "Oops something went wrong with loading favorites list...", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -121,17 +123,16 @@ class FavoritesFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavorit
     }
 
     override fun updateFavorites(movieId: Int, addedFlag: Boolean) {
-        myViewModel.markAsFavorite(movieId, addedFlag, BuildConfig.TMDB_SESSION_ID).observe(viewLifecycleOwner) {
-            if (it != null) renderDataToMarkAsFavorites(it)
-        }
+        addToFavoritesViewModel.addToFavoritesLiveData.observe(viewLifecycleOwner) { renderDataToMarkAsFavorites(it) }
+        addToFavoritesViewModel.markAsFavorite(movieId, addedFlag)
     }
 
     private fun renderDataToMarkAsFavorites(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                val data = appState.success as Boolean
+                val data = appState.success as ChangeFavoritesDTO
                 binding.favoritesFragmentLoadingLayout.visibility = View.GONE
-                if (data) {
+                if (data.success) {
                     Toast.makeText(requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show()
                     // Update favorites list
                     getFavoritesListFromViewModel()

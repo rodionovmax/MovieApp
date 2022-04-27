@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.gb.movieapp.R
 import com.gb.movieapp.model.Movie
-import com.gb.movieapp.model.getMoviesList
+import com.gb.movieapp.utils.PICTURE_BASE_URL
 import com.gb.movieapp.view.OnFavoritesCheckboxListener
 import com.gb.movieapp.view.favorites.FavoritesFragment
 
@@ -40,8 +42,9 @@ class HomeMovieAdapter(
         fun bind(movie: Movie) {
             itemView.apply {
                 findViewById<TextView>(R.id.movie_card_title).text = movie.originalTitle
-                findViewById<TextView>(R.id.movie_card_year).text = movie.releaseYear.toString()
+                findViewById<TextView>(R.id.movie_card_year).text = movie.releaseYear
                 findViewById<TextView>(R.id.movie_card_rating).text = movie.rating.toString()
+                findViewById<ImageView>(R.id.iv_movie_poster).load(PICTURE_BASE_URL + movie.posterUrl)
 
                 // Handling click on a movie card
                 setOnClickListener {

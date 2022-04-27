@@ -13,6 +13,8 @@ import java.net.URL
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
+
+// TODO: Can be deleted
 class MovieDetailsLoader(
     private val listener: MovieDetailsLoaderListener,
     private val movieId: Int, private val apiKey: String
