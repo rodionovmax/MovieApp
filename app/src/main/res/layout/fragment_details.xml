@@ -184,6 +184,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/iv_poster"
                 tools:text="@string/movie_overview_details" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/write_review_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/overview_movie_details"
+                android:text="@string/details_write_review_btn" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/write_review_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                android:hint="@string/et_review_hint"
+                android:gravity="top|left"
+                android:minHeight = "100dp"
+                android:visibility="invisible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/send_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/et_review"
+                app:backgroundTint="@color/blue"
+                android:text="@string/btn_send"
+                android:visibility="invisible" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

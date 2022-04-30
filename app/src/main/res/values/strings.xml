@@ -49,4 +49,13 @@
     <string name="movie_overview_details">Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.</string>
     <string name="localized_movie_name_details">Original title</string>
     <string name="favorites_movie_flag">Favorites movie flag</string>
+    <string name="switch_text_on">On</string>
+    <string name="switch_text_off">Off</string>
+    <string name="settings_rating_text">Show only movies with rating more than 8.0</string>
+    <string name="settings_title">Settings</string>
+    <string name="details_write_review_btn">write review</string>
+    <string name="et_review_hint">Write your review ...</string>
+    <string name="btn_send">send</string>
+    <string name="menu_history">History</string>
+    <string name="history_title">Reviews</string>
 </resources>

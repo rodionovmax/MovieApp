@@ -11,4 +11,5 @@
     <color name="blue_light">#2196F3</color>
     <color name="fragments_background">#D7DDFB</color>
     <color name="loading_background">#80FFFFFF</color>
+    <color name="loadingBackground">#80FFFFFF</color>
 </resources>

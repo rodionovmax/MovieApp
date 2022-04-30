@@ -56,6 +56,15 @@ class DetailsFragment : Fragment() {
 
         detailsViewModel.detailsLiveData.observe(viewLifecycleOwner) { renderData(it) }
         detailsViewModel.getMovieDetailsFromRemoteSource(movieDetailsBundle.id)
+
+        // Click Write Review button to make review edit text and send button visible
+        with(binding) {
+            writeReviewBtn.setOnClickListener {
+                etReview.visibility = View.VISIBLE
+                sendBtn.visibility = View.VISIBLE
+            }
+        }
+
     }
 
     private fun renderData(appState: AppState) {
