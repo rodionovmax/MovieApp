@@ -15,6 +15,7 @@ import com.gb.movieapp.view.details.DetailsFragment
 import com.gb.movieapp.view.favorites.FavoritesFragment
 import com.gb.movieapp.view.history.ReviewsFragment
 import com.gb.movieapp.view.home.HomeFragment
+import com.gb.movieapp.view.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 

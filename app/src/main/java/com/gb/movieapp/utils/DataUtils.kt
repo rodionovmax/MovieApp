@@ -1,7 +1,7 @@
 package com.gb.movieapp.utils
 
-import androidx.lifecycle.Transformations.map
 import com.gb.movieapp.model.*
+import com.gb.movieapp.model.room.ReviewEntity
 
 const val PICTURE_BASE_URL = "https://image.tmdb.org/t/p/original"
 
@@ -35,5 +35,15 @@ fun convertFavoritesDtoToModel(favoritesListDTO: FavoritesListDTO) : List<Movie>
     return favorites
 }
 
+
+fun convertReviewEntityToMovieReview(entityList: List<ReviewEntity>): List<MovieReview> {
+    return entityList.map {
+        MovieReview(it.movieId, it.title, it.review)
+    }
+}
+
+fun convertReviewToEntity(review: MovieReview): ReviewEntity {
+    return ReviewEntity(0, review.movieId, review.title, review.review)
+}
 
 

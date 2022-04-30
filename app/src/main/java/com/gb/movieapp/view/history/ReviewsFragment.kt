@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.gb.movieapp.databinding.FragmentReviewsBinding
 import com.gb.movieapp.model.MovieReview
 import com.gb.movieapp.viewmodel.AppState
-import com.gb.movieapp.viewmodel.HistoryViewModel
+import com.gb.movieapp.viewmodel.ReviewViewModel
 import kotlinx.android.synthetic.main.fragment_reviews.*
 
 class ReviewsFragment : Fragment() {
     private var _binding: FragmentReviewsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: HistoryViewModel by lazy { ViewModelProvider(this).get(HistoryViewModel::class.java) }
+    private val viewModel: ReviewViewModel by lazy { ViewModelProvider(this).get(ReviewViewModel::class.java) }
     private val adapter: ReviewsAdapter by lazy { ReviewsAdapter() }
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class ReviewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reviewsFragmentRecyclerview.adapter = adapter
-        viewModel.historyLiveData.observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.reviewLiveData.observe(viewLifecycleOwner, Observer { renderData(it) })
         viewModel.getAllHistory()
     }
     private fun renderData(appState: AppState) {

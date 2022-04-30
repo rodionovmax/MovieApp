@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_margin="20dp"
-    tools:context=".view.SettingsFragment">
+    tools:context=".view.settings.SettingsFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/settings_title"
