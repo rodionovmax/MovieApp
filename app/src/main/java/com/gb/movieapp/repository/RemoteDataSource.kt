@@ -1,79 +1,112 @@
 package com.gb.movieapp.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.gb.movieapp.BuildConfig
 import com.gb.movieapp.model.ChangeFavoritesDTO
 import com.gb.movieapp.model.FavoritesListDTO
 import com.gb.movieapp.model.MovieDetailsDTO
 import com.gb.movieapp.model.MovieListDTO
 import com.gb.movieapp.model.request.FavoritesPostModel
+import com.gb.movieapp.utils.convertDtoToModel
+import com.gb.movieapp.viewmodel.AppState
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.*
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+private const val SERVER_ERROR = "Ошибка сервера"
+private const val REQUEST_ERROR = "Ошибка запроса на сервер"
+private const val CORRUPTED_DATA = "Неполные данные"
+
+
 class RemoteDataSource {
 
-    // Movie Details
-    private val movieDetailsAPI = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
+    // Movie api
+    private val movieAPI = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder().setLenient().create()
             )
         )
-        .build().create(MovieDetailsAPI::class.java)
+        .build().create(MovieAPI::class.java)
 
     fun getMovieDetails(movieId: Int, callback: Callback<MovieDetailsDTO>) {
-        movieDetailsAPI.getMovieDetails(movieId, BuildConfig.TMDB_API_KEY).enqueue(callback)
+        movieAPI.getMovieDetails(movieId, BuildConfig.TMDB_API_KEY).enqueue(callback)
     }
 
-    // List Movies
-    private val movieListAPI = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder().setLenient().create()
-            )
-        )
-        .build().create(MovieListAPI::class.java)
-
     fun getMovieList(sectionId: Int, callback: Callback<MovieListDTO>) {
-        when (sectionId) {
-            0 -> movieListAPI.getPopular(BuildConfig.TMDB_API_KEY).enqueue(callback)
-            1 -> movieListAPI.getNowPlaying(BuildConfig.TMDB_API_KEY).enqueue(callback)
-            2 -> movieListAPI.getUpcoming(BuildConfig.TMDB_API_KEY).enqueue(callback)
-            3 -> movieListAPI.getTopRated(BuildConfig.TMDB_API_KEY).enqueue(callback)
+//        when (sectionId) {
+//            0 -> movieAPI.getPopular(BuildConfig.TMDB_API_KEY).enqueue(callback)
+//            1 -> movieAPI.getNowPlaying(BuildConfig.TMDB_API_KEY).enqueue(callback)
+//            2 -> movieAPI.getUpcoming(BuildConfig.TMDB_API_KEY).enqueue(callback)
+//            3 -> movieAPI.getTopRated(BuildConfig.TMDB_API_KEY).enqueue(callback)
+//        }
+    }
+
+    private fun checkResponse(serverResponse: MovieListDTO): AppState {
+        return if (serverResponse.results == null) {
+            AppState.Error(Throwable(CORRUPTED_DATA))
+        } else {
+            AppState.Success(convertDtoToModel(serverResponse))
         }
     }
 
-    // List Favorites
-    private val favoritesListAPI = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder().setLenient().create()
-            )
-        )
-        .build().create(FavoritesAPI::class.java)
+    fun checkServerError(response : MovieListDTO?) : AppState {
+        return if (response != null) {
+            checkResponse(response)
+        } else {
+            AppState.Error(Throwable(SERVER_ERROR))
+        }
+    }
+
+    fun getPopularList() : LiveData<AppState> {
+        val data = MutableLiveData<AppState>()
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = movieAPI.getPopular(BuildConfig.TMDB_API_KEY)
+            data.postValue(checkServerError(response))
+        }
+        return data
+    }
+
+    fun getNowPlayingList() : LiveData<AppState> {
+        val data = MutableLiveData<AppState>()
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = movieAPI.getNowPlaying(BuildConfig.TMDB_API_KEY)
+            data.postValue(checkServerError(response))
+        }
+        return data
+    }
+
+    fun getNowUpcomingList() : LiveData<AppState> {
+        val data = MutableLiveData<AppState>()
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = movieAPI.getUpcoming(BuildConfig.TMDB_API_KEY)
+            data.postValue(checkServerError(response))
+        }
+        return data
+    }
+
+    fun getTopRatedList() : LiveData<AppState> {
+        val data = MutableLiveData<AppState>()
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = movieAPI.getTopRated(BuildConfig.TMDB_API_KEY)
+            data.postValue(checkServerError(response))
+        }
+        return data
+    }
 
     fun getFavoritesList(callback: Callback<FavoritesListDTO>) {
-        favoritesListAPI.getFavoritesList(
+        movieAPI.getFavoritesList(
             BuildConfig.TMDB_ACCOUNT_ID, BuildConfig.TMDB_API_KEY, BuildConfig.TMDB_SESSION_ID
         ).enqueue(callback)
     }
 
-    // Mark as favorite
-    private val addToFavoritesAPI = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder().setLenient().create()
-            )
-        )
-        .build().create(FavoritesAPI::class.java)
-
     fun addToFavorites(movieId: Int, addedFlag: Boolean, callback: Callback<ChangeFavoritesDTO>) {
-        addToFavoritesAPI.addToFavorites(
+        movieAPI.addToFavorites(
             BuildConfig.TMDB_ACCOUNT_ID,
             BuildConfig.TMDB_API_KEY,
             BuildConfig.TMDB_SESSION_ID,

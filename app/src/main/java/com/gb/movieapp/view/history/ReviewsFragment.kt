@@ -27,12 +27,14 @@ class ReviewsFragment : Fragment() {
         _binding = FragmentReviewsBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reviewsFragmentRecyclerview.adapter = adapter
         viewModel.reviewLiveData.observe(viewLifecycleOwner, Observer { renderData(it) })
-        viewModel.getAllHistory()
+        viewModel.getAllReviews()
     }
+
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
@@ -47,14 +49,20 @@ class ReviewsFragment : Fragment() {
             is AppState.Error -> {
                 binding.reviewsFragmentRecyclerview.visibility = View.VISIBLE
                 binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
-                Toast.makeText(requireContext(), "Oops looks like I can't retrieve history from the database ...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Oops looks like I can't retrieve history from the database ...",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = ReviewsFragment()

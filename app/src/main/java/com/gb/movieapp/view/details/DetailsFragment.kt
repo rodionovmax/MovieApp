@@ -13,10 +13,12 @@ import coil.api.load
 import com.gb.movieapp.databinding.FragmentDetailsBinding
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.MovieDetailsDTO
+import com.gb.movieapp.model.MovieReview
 import com.gb.movieapp.model.getDefaultMovieDetails
 import com.gb.movieapp.utils.PICTURE_BASE_URL
 import com.gb.movieapp.viewmodel.AppState
 import com.gb.movieapp.viewmodel.MovieDetailsViewModel
+import com.gb.movieapp.viewmodel.ReviewViewModel
 
 class DetailsFragment : Fragment() {
 
@@ -35,6 +37,11 @@ class DetailsFragment : Fragment() {
 
     private val detailsViewModel: MovieDetailsViewModel by lazy {
         ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+    }
+
+    // TODO: create base View Model and move these methods there
+    private val reviewsViewModel: ReviewViewModel by lazy {
+        ViewModelProvider(this).get(ReviewViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +70,19 @@ class DetailsFragment : Fragment() {
                 etReview.visibility = View.VISIBLE
                 sendBtn.visibility = View.VISIBLE
             }
+
+            // write review to DB
+            sendBtn.setOnClickListener {
+                reviewsViewModel.addReview(
+                    MovieReview(
+                        movieId = movieDetailsBundle.id,
+                        title = movieDetailsBundle.originalTitle,
+                        review = etReview.text.toString()
+                    )
+                )
+            }
         }
+
 
     }
 
@@ -81,7 +100,11 @@ class DetailsFragment : Fragment() {
             is AppState.Error -> {
                 binding.detailsMainView.visibility = View.VISIBLE
                 binding.detailsLoadingLayout.visibility = View.GONE
-                Toast.makeText(requireContext(), "Oops something went wrong with loading movie details...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Oops something went wrong with loading movie details...",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

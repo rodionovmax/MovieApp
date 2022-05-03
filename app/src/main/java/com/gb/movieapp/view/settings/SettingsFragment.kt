@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gb.movieapp.databinding.FragmentSettingsBinding
-
-private const val RATING_8_AND_HIGHER = "RATING_8"
+import com.gb.movieapp.isShowMoviesWithRating8
+import com.gb.movieapp.setValueShowMovieWithRating8
+import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : Fragment() {
 
@@ -38,25 +39,16 @@ class SettingsFragment : Fragment() {
         // If switch is checked save true in shared preferences
         // to display only movies with rating 8 and higher
         with(binding) {
+            settingsSwitchBtn.isChecked = requireActivity().isShowMoviesWithRating8()
             settingsSwitchBtn.setOnClickListener {
                 if (settingsSwitchBtn.isChecked) {
-                    showMoviesWithRatingEight(true)
+                    requireActivity().setValueShowMovieWithRating8(true)
                 } else {
-                    showMoviesWithRatingEight(false)
+                    requireActivity().setValueShowMovieWithRating8(false)
                 }
             }
         }
 
-    }
-
-    // Write boolean to shared preferences
-    private fun showMoviesWithRatingEight(isRatingEight: Boolean) {
-        activity?.let {
-            with(it.getPreferences(Context.MODE_PRIVATE).edit()) {
-                putBoolean(RATING_8_AND_HIGHER, isRatingEight)
-                apply()
-            }
-        }
     }
 
 

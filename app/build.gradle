@@ -27,6 +27,8 @@ android {
         it.buildConfigField "String", "TMDB_ACCOUNT_ID", accountId
         def sessionId = properties.getProperty("tmdb_session_id", "")
         it.buildConfigField "String", "TMDB_SESSION_ID", sessionId
+        def baseUrl = properties.getProperty("base_url", "")
+        it.buildConfigField "String", "BASE_URL", baseUrl
     }
 
     buildFeatures {
@@ -68,5 +70,12 @@ dependencies {
     implementation 'io.coil-kt:coil:0.11.0'
     //Room
     implementation 'androidx.room:room-runtime:2.4.2'
+
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+
+    implementation 'androidx.room:room-ktx:2.4.2'
     kapt 'androidx.room:room-compiler:2.4.2'
+
+
 }

@@ -2,6 +2,7 @@ package com.gb.movieapp.model.room
 
 import androidx.room.*
 
+@Dao
 interface ReviewDao {
 
     @Query("SELECT * FROM ReviewEntity")
@@ -10,8 +11,8 @@ interface ReviewDao {
     @Query("SELECT * FROM ReviewEntity WHERE title LIKE :title")
     fun getDataByWord(title: String): List<ReviewEntity>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(entity: ReviewEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)  // TODO: read about conflict strategies
+    suspend fun insert(entity: ReviewEntity)
 
     @Update
     fun update(entity: ReviewEntity)

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentHomeBinding
+import com.gb.movieapp.isShowMoviesWithRating8
 import com.gb.movieapp.model.ChangeFavoritesDTO
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.model.Section
@@ -68,11 +69,35 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
         binding.homeSectionsList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        for (sectionId in 0 until getSections().size) {
-            movieListViewModel.movieListLiveData.observe(viewLifecycleOwner) {
-                if (it != null) renderData(it, sectionId)
-            }
-            movieListViewModel.getMovieListFromRemoteSource(sectionId)
+//        for (sectionId in 0 until getSections().size) {
+//        for (sectionId in 0 until 2) {
+//            movieListViewModel.movieListLiveData.observe(viewLifecycleOwner) {
+//                if (it != null) renderData(it, sectionId)
+//            }
+//            movieListViewModel.getMovieListFromRemoteSource(sectionId)
+//        }
+
+        /*
+    *
+    * Section(0, "Popular"),
+        Section(1, "Now Playing"),
+        Section(2, "Upcoming"),
+        Section(3, "Top Rated"),*/
+
+        movieListViewModel.getPopular().observe(viewLifecycleOwner) {
+            if (it != null) renderData(it, 0)
+        }
+
+        movieListViewModel.getNowPlaying().observe(viewLifecycleOwner) {
+            if (it != null) renderData(it, 1)
+        }
+
+        movieListViewModel.getUpcoming().observe(viewLifecycleOwner) {
+            if (it != null) renderData(it, 2)
+        }
+
+        movieListViewModel.getTopRated().observe(viewLifecycleOwner) {
+            if (it != null) renderData(it, 3)
         }
     }
 
@@ -83,9 +108,19 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
                 val sectionName : String = getSections()[sectionId].name
                 binding.homeFragmentLoadingLayout.visibility = View.GONE
                 @Suppress("UNCHECKED_CAST")
-                mapData.add(Pair(Section(sectionId, sectionName), appState.success as List<Movie>))
-                adapter = HomeSectionAdapter(mapData, this)
-                binding.homeSectionsList.adapter = adapter
+                val list = appState.success as List<Movie>
+                val filter = list.filter { movie ->
+                    if (requireActivity().isShowMoviesWithRating8()) {
+                        movie.rating >= 8
+                    } else {
+                        movie.rating > 0
+                    }
+                }
+                mapData.add(Pair(Section(sectionId, sectionName), filter))
+                if (mapData.size == 4) {
+                    adapter = HomeSectionAdapter(mapData, this)
+                    binding.homeSectionsList.adapter = adapter
+                }
             }
             is AppState.Loading -> {
                 binding.homeFragmentLoadingLayout.visibility = View.VISIBLE
