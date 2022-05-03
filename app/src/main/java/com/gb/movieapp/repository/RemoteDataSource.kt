@@ -38,15 +38,6 @@ class RemoteDataSource {
         movieAPI.getMovieDetails(movieId, BuildConfig.TMDB_API_KEY).enqueue(callback)
     }
 
-    fun getMovieList(sectionId: Int, callback: Callback<MovieListDTO>) {
-//        when (sectionId) {
-//            0 -> movieAPI.getPopular(BuildConfig.TMDB_API_KEY).enqueue(callback)
-//            1 -> movieAPI.getNowPlaying(BuildConfig.TMDB_API_KEY).enqueue(callback)
-//            2 -> movieAPI.getUpcoming(BuildConfig.TMDB_API_KEY).enqueue(callback)
-//            3 -> movieAPI.getTopRated(BuildConfig.TMDB_API_KEY).enqueue(callback)
-//        }
-    }
-
     private fun checkResponse(serverResponse: MovieListDTO): AppState {
         return if (serverResponse.results == null) {
             AppState.Error(Throwable(CORRUPTED_DATA))

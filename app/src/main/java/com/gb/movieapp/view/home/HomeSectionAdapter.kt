@@ -24,7 +24,7 @@ class HomeSectionAdapter(private val mapData: MutableList<Pair<Section, List<Mov
 
     override fun onBindViewHolder(holder: HomeSectionViewHolder, position: Int) {
         holder.bind(mapData[position].first)
-        currentPosition = holder.adapterPosition
+        currentPosition = holder.adapterPosition + 1
     }
 
     override fun getItemCount(): Int {
@@ -58,8 +58,6 @@ class HomeSectionAdapter(private val mapData: MutableList<Pair<Section, List<Mov
             }
         }
     }
-
-
 }
 
 

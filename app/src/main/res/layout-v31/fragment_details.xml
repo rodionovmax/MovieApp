@@ -197,6 +197,7 @@
                 android:id="@+id/et_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/system_accent2_700"
                 app:layout_constraintTop_toBottomOf="@+id/write_review_btn"
                 app:layout_constraintStart_toStartOf="parent"
                 android:hint="@string/et_review_hint"
@@ -212,6 +213,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_review"
                 app:backgroundTint="@color/blue"
                 android:text="@string/btn_send"
+                android:textColor="@android:color/white"
                 android:visibility="invisible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

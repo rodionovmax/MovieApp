@@ -69,21 +69,6 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
         binding.homeSectionsList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-//        for (sectionId in 0 until getSections().size) {
-//        for (sectionId in 0 until 2) {
-//            movieListViewModel.movieListLiveData.observe(viewLifecycleOwner) {
-//                if (it != null) renderData(it, sectionId)
-//            }
-//            movieListViewModel.getMovieListFromRemoteSource(sectionId)
-//        }
-
-        /*
-    *
-    * Section(0, "Popular"),
-        Section(1, "Now Playing"),
-        Section(2, "Upcoming"),
-        Section(3, "Top Rated"),*/
-
         movieListViewModel.getPopular().observe(viewLifecycleOwner) {
             if (it != null) renderData(it, 0)
         }
@@ -120,6 +105,7 @@ class HomeFragment : Fragment(), OnFavoritesCheckboxListener, UpdateFavoritesLis
                 if (mapData.size == 4) {
                     adapter = HomeSectionAdapter(mapData, this)
                     binding.homeSectionsList.adapter = adapter
+                    adapter.notifyDataSetChanged()
                 }
             }
             is AppState.Loading -> {

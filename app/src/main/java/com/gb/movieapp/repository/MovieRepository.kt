@@ -1,6 +1,8 @@
 package com.gb.movieapp.repository
 
 import androidx.lifecycle.LiveData
+import com.gb.movieapp.model.ChangeFavoritesDTO
+import com.gb.movieapp.model.FavoritesListDTO
 import com.gb.movieapp.model.MovieDetailsDTO
 import com.gb.movieapp.model.MovieListDTO
 import com.gb.movieapp.viewmodel.AppState
@@ -12,11 +14,6 @@ interface MovieRepository {
         callback: Callback<MovieDetailsDTO>
     )
 
-    fun getMoviesListFromServer(
-        sectionId: Int,
-        callback: Callback<MovieListDTO>
-    )
-
     fun getPopularSection() : LiveData<AppState>
 
     fun getNowPLayingSection() : LiveData<AppState>
@@ -24,5 +21,15 @@ interface MovieRepository {
     fun getUpcomingSection() : LiveData<AppState>
 
     fun getTopRatedSection() : LiveData<AppState>
+
+    fun getFavoritesListFromServer(
+        callback: Callback<FavoritesListDTO>
+    )
+
+    fun addToFavoritesServer(
+        movieId: Int,
+        addedFlag: Boolean,
+        callback: Callback<ChangeFavoritesDTO>
+    )
 }
 

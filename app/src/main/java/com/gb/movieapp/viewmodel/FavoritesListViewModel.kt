@@ -3,10 +3,7 @@ package com.gb.movieapp.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gb.movieapp.model.FavoritesListDTO
-import com.gb.movieapp.repository.FavoritesRepository
-import com.gb.movieapp.repository.FavoritesRepositoryImpl
-import com.gb.movieapp.repository.MovieRepositoryImpl
-import com.gb.movieapp.repository.RemoteDataSource
+import com.gb.movieapp.repository.*
 import com.gb.movieapp.utils.convertFavoritesDtoToModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,9 +15,7 @@ private const val CORRUPTED_DATA = "Неполные данные"
 
 class FavoritesListViewModel(
     val favoritesListLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val favoritesListRepositoryImpl: FavoritesRepository = FavoritesRepositoryImpl(
-        RemoteDataSource()
-    )
+    private val favoritesListRepositoryImpl: MovieRepository = MovieRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
     fun getLiveData() = favoritesListLiveData
 

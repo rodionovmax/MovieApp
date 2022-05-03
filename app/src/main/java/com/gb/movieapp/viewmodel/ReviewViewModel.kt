@@ -10,13 +10,12 @@ import com.gb.movieapp.repository.LocalRepositoryImpl
 
 class ReviewViewModel(
     val reviewLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val reviewsRepository: LocalRepository = LocalRepositoryImpl(getReviewsDao())  // TODO: Uncomment when the database will be created
+    private val reviewsRepository: LocalRepository = LocalRepositoryImpl(getReviewsDao())
 ) : ViewModel() {
 
     fun getAllReviews() {
         reviewLiveData.value = AppState.Loading
-//        reviewLiveData.value = AppState.Success(getMovieReviewsLocal())  // Taking reviews from hardcoded function TODO: delete
-        reviewLiveData.value = AppState.Success(reviewsRepository.getAllReviews())  // Uncomment when reviews will be saving to local repository
+        reviewLiveData.value = AppState.Success(reviewsRepository.getAllReviews())
     }
 
     fun addReview(review : MovieReview) {

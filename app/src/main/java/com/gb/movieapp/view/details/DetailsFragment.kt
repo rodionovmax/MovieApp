@@ -80,6 +80,8 @@ class DetailsFragment : Fragment() {
                         review = etReview.text.toString()
                     )
                 )
+                etReview.visibility = View.INVISIBLE
+                sendBtn.visibility = View.INVISIBLE
             }
         }
 
