@@ -13,6 +13,11 @@
         android:icon="@drawable/ic_history"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_contacts"
+        android:icon="@drawable/ic_contacts"
+        android:title="@string/menu_contacts"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/settings"
         android:title="@string/toolbar_settings_title"
         app:showAsAction="never" />
