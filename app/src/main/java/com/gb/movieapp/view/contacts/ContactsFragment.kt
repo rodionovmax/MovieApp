@@ -5,23 +5,30 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout.LayoutParams
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import com.gb.movieapp.R
 import com.gb.movieapp.databinding.FragmentContactsBinding
 
 
 const val REQUEST_CODE = 42
+const val MY_TAG = "my_tag"
 
 class ContactsFragment : Fragment() {
     private var _binding: FragmentContactsBinding? = null
@@ -43,6 +50,18 @@ class ContactsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
+        Log.d(
+            MY_TAG,
+            binding.containerForContacts.size.toString()
+        )
+//        for (i in 0 until binding.containerForContacts.size) {
+//            binding.containerForContacts[i].setOnClickListener {
+//                context?.let { it1 -> call(it1, "123456789") }
+//            }
+//        }
+        binding.containerForContacts.setOnClickListener {
+            context?.let { it1 -> call(it1, "123456789") }
+        }
     }
 
     override fun onDestroyView() {
@@ -132,11 +151,13 @@ class ContactsFragment : Fragment() {
             cursorWithContacts?.let { cursor ->
                 for (i in 0..cursor.count) {
                     val pos = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                    val phoneNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER).toString()
 
                     if (cursor.moveToPosition(i)) {
                         // Берём из Cursor’а столбец с именем
                         val name = cursor.getString(pos)
                         addView(it, name)
+                        Log.d(MY_TAG, phoneNumber)
                     }
                     drawHorizontalLine(it)
                 }
@@ -163,5 +184,32 @@ class ContactsFragment : Fragment() {
         )
         line.setBackgroundColor(R.color.dark_grey)
         binding.containerForContacts.addView(line)
+    }
+
+    private fun call(context: Context, contactNumber : String) {
+        View(context).setOnClickListener {
+            makeCall(contactNumber)
+        }
+    }
+
+    private fun makeCall(contactNumber : String) {
+
+        val callIntent = Intent(Intent.ACTION_CALL)
+
+        callIntent.data = Uri.parse("tel:$contactNumber")
+
+        // on below line we are checking if the calling permissions are granted or not.
+        if (context?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.CALL_PHONE
+                )
+            } != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        // at last we are starting activity.
+        startActivity(callIntent)
     }
 }

@@ -1,4 +1,4 @@
-package com.gb.movieapp.view.history
+package com.gb.movieapp.view.rewievs
 
 import android.view.LayoutInflater
 import android.view.View

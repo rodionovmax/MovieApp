@@ -12,9 +12,10 @@ import com.gb.movieapp.R
 import com.gb.movieapp.databinding.ActivityMainBinding
 import com.gb.movieapp.model.Movie
 import com.gb.movieapp.view.contacts.ContactsFragment
+import com.gb.movieapp.view.contacts.ContactsNewFragment
 import com.gb.movieapp.view.details.DetailsFragment
 import com.gb.movieapp.view.favorites.FavoritesFragment
-import com.gb.movieapp.view.history.ReviewsFragment
+import com.gb.movieapp.view.rewievs.ReviewsFragment
 import com.gb.movieapp.view.home.HomeFragment
 import com.gb.movieapp.view.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -139,6 +140,7 @@ class MainActivity : AppCompatActivity(), MovieCardListener {
             R.id.settings -> openFragment(SettingsFragment.newInstance())
             R.id.menu_history -> openFragment(ReviewsFragment.newInstance())
             R.id.menu_contacts -> openFragment(ContactsFragment.newInstance())
+            R.id.menu_contacts_new -> openFragment(ContactsNewFragment.newInstance())
         }
 
         return super.onOptionsItemSelected(item)
